@@ -1,5 +1,5 @@
 import Modal from "react-modal/lib/components/Modal";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import userIcon from "../../assets/img/user-icon.svg";
 import ModalAuth from "../../Page/auth/ModalAuth";
@@ -11,6 +11,8 @@ Hearder.propTypes = {};
 function Hearder(props) {
   const [inputSearch, setInputSearch] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [count, setCount] = useState([]);
+  const { change, changeCart } = props;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth);
   const handleSubmit = () => {};
@@ -19,11 +21,12 @@ function Hearder(props) {
     setInputSearch(inputValue);
   };
   const navigate = useNavigate();
-  const count = useSelector((state) => state.cart);
-  const countQuantity = count?.cartItem?.reduce(
-    (arr, cur) => arr + cur.quantity,
-    0
-  );
+
+  console.log("count", count);
+  useEffect(() => {
+    setCount(JSON.parse(localStorage.getItem("CART")));
+  }, [change, changeCart]);
+  const countQuantity = count?.reduce((arr, cur) => arr + cur.quantity, 0);
   const handleLoginLogout = () => {
     if (isEmpty(user?.user)) {
       setModalIsOpen(true);
@@ -33,8 +36,7 @@ function Hearder(props) {
   };
   const handleUser = () => {
     if (!isEmpty(user?.user)) {
-      console.log("aa");
-      navigate("/user");
+      navigate("/user/0");
     }
   };
   return (

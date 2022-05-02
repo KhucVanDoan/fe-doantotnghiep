@@ -1,5 +1,5 @@
 import { Provider } from "react-redux";
-import { Route, Routes } from "react-router";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import DetailProduct from "./client/components/DetailProduct";
 import NotFound from "./client/components/NotFound";
@@ -9,7 +9,6 @@ import DoubleWatch from "./client/Page/DoubleWatch";
 import HomePage from "./client/Page/Homepage";
 import MenWatch from "./client/Page/MenPage";
 import User from "./client/Page/user";
-import UserInformationForm from "./client/Page/user/infoUser";
 import WomenWatch from "./client/Page/WomenWatch";
 import { useStore } from "./client/redux/store";
 
@@ -26,7 +25,7 @@ function App(props) {
           <Route path="/product/:id/detail" element={<DetailProduct />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/cart/order" element={<CartLocationConfirm />} />
-          <Route path="/user" element={<User />} />
+          <Route path="/user/:id" element={<User />} />
           <Route element={<NotFound />} />
         </Routes>
       </Provider>

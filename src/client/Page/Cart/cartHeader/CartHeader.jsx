@@ -1,16 +1,18 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+
 import "./style.scss";
 function CartHeader(props) {
-  const countCart = useSelector((state) => state.cart);
-  const countQuantity = countCart?.cartItem?.reduce(
-    (arr, cur) => arr + cur.quantity,
-    0
-  );
+  const { changeCart } = props;
+  const [quantitycart, setQuantityCart] = useState(0);
+  useEffect(() => {
+    setQuantityCart(JSON.parse(localStorage.getItem("CART")));
+  }, [changeCart]);
+  console.log("quantity", quantitycart);
+  // const countQuantity = quantitycart?.reduce((arr, cur) => arr + cur.quantity, 0);
   return (
     <div className="cart__left__header">
       <p>GIỎ HÀNG</p>
-      <p>({countQuantity} Sản Phẩm)</p>
+      <p>({0} Sản Phẩm)</p>
     </div>
   );
 }

@@ -1,14 +1,14 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import Quantity from "../../../components/Quantity";
 import "./style.scss";
 import { deleteItem } from "../../../redux/actions/cart.action";
 import { useDispatch } from "react-redux";
 import { formatMoney } from "../../../common/common";
-const CartItem = ({ onChange, item }) => {
+const CartItem = ({ onChange, item, changeCart, setChangeCart }) => {
   const dispatch = useDispatch();
   const handleButtonDeleteClick = () => {
-    dispatch(deleteItem(item.id));
+    dispatch(deleteItem(item.id, () => setChangeCart(!changeCart)));
   };
   const handleQuantityChange = (value) => {
     if (!onChange) return;

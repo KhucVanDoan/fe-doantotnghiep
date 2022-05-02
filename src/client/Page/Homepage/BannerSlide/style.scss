@@ -1,15 +1,15 @@
 .slider {
-  width: 950px;
-  border-radius: 19px;
-
+  width: 100%;
+  border-radius: 5px;
+  margin-top: -15px;
   .slider__item {
     outline: none;
     overflow: hidden;
-    border-radius: 18px;
+    border-radius: 5px;
 
     img {
       width: 100%;
-      height: 271px;
+      height: 350px;
       object-fit: cover;
     }
   }
@@ -26,12 +26,12 @@
     }
 
     .slick-active button {
-      background-color: #fff;
+      background-color: rgb(13, 11, 11);
     }
 
     button {
       width: 100%;
-      background-color: #0099a8;
+      background-color: #333535;
       height: 6px;
       padding: 0;
       &::before {

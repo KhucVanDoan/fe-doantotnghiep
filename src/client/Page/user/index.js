@@ -1,26 +1,30 @@
-import React, { useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import SideBarUser from "./siderBar/SideBarUser";
 import UserInformationForm from "./infoUser";
 import "./style.scss";
 import Hearder from "../../components/Header";
 import Footer from "../../components/Footer";
 import Order from "./oder";
+import { useParams } from "react-router-dom";
 function User(props) {
-  const { pathname } = useLocation();
-  const getTitleHeader = useMemo(() => {
-    switch (pathname) {
-      case "/user":
+  const { id } = useParams();
+  console.log();
+  const [a, setA] = useState("");
+  useEffect(() => {
+    setA(getTitleHeader());
+  }, [id]);
+  console.log("id", id);
+  console.log("a", id);
+  const getTitleHeader = () => {
+    switch (id) {
+      case "0":
         return "THÔNG TIN TÀI KHOẢN";
-
-      case "/user/orderProgress":
+      case "1":
         return "QUẢN LÝ ĐƠN HÀNG";
-
       default:
         return "";
     }
-  }, [pathname]);
-
+  };
   return (
     <>
       <Hearder />
@@ -32,10 +36,15 @@ function User(props) {
             </div>
             <div className="user__right">
               <div className="user-main">
-                <div className="user-header">{getTitleHeader}</div>
+                <div className="user-header">{a}</div>
                 <div className="user-content">
-                  {pathname === "/user" && <UserInformationForm />}
-                  {pathname === "user/orderProgress" && <Order />}
+                  {id === "0" ? (
+                    <UserInformationForm />
+                  ) : id === "1" ? (
+                    <Order />
+                  ) : (
+                    <div>hihi</div>
+                  )}
                 </div>
               </div>
             </div>

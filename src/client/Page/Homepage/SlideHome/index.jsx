@@ -1,5 +1,4 @@
 import React from "react";
-import BannerIconHome from "../BannerIconHome.jsx";
 import BannerSlide from "../BannerSlide";
 import "./style.scss";
 function SlideHome() {
@@ -7,7 +6,6 @@ function SlideHome() {
     <section className="banner-slide">
       <div className="banner-slide__content container">
         <BannerSlide />
-        <BannerIconHome />
       </div>
     </section>
   );

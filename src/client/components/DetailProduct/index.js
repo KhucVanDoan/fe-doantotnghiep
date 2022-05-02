@@ -1,16 +1,16 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/actions/cart.action";
 import Footer from "../Footer";
 import Hearder from "../Header";
 import Quantity from "../Quantity";
-import { toast } from "react-toastify";
 import "./style.scss";
 import { useParams } from "react-router";
 const DetailProduct = () => {
   const [products, setProducts] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const [change, setChange] = useState(false);
   const dispatch = useDispatch();
   const { id } = useParams();
   const product = {
@@ -37,12 +37,13 @@ const DetailProduct = () => {
       quantity: quantity,
       name: product.name,
     };
-    dispatch(addToCart(params));
+    dispatch(addToCart(params,()=>setChange(!change)));
+    
   };
 
   return (
     <>
-      <Hearder />
+      <Hearder change={change} />
       <div className="product-detail-page">
         <div className="container">
           <div className="product-detail-page__content">

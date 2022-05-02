@@ -7,7 +7,7 @@ function SideBarUser(props) {
   const listTab = [
     {
       id: 1,
-      path: "/user",
+      path: "/user/0",
       search: "",
       title: "Thông tin tài khoản",
       className: "category-item",
@@ -15,7 +15,7 @@ function SideBarUser(props) {
 
     {
       id: 2,
-      path: "/user/orderProgress",
+      path: "/user/1",
       search: "",
       title: "Quản lý đơn hàng",
       className: "category-item",
