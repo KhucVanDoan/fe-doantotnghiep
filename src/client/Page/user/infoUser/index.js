@@ -6,7 +6,8 @@ import * as yup from "yup";
 import Button from "../../../components/form-controls/Button";
 import GenderField from "../../../components/form-controls/GenderField";
 import InputField from "../../../components/form-controls/InputField";
-function UserInformationForm(props) {
+function UserInformationForm() {
+  const user = JSON.parse(localStorage.getItem("user"));
   const schema = yup.object().shape({
     name: yup.string().required("Please enter your name"),
     email: yup
@@ -21,66 +22,33 @@ function UserInformationForm(props) {
       .number()
       .required("Please enter your phone gender")
       .typeError("Please enter your phone gender"),
-    birthday: yup
-      .string()
-      .required("Please enter your phone birthday")
-      .typeError("Please enter your phone birthday"),
-    isChangePassword: yup.boolean(),
-    old_password: yup.string().when("isChangePassword", {
-      is: true,
-      then: yup.string().required("Please enter your password").min(6),
-    }),
-    new_password: yup.string().when("isChangePassword", {
-      is: true,
-      then: yup.string().required("Please enter your new password").min(6),
-    }),
-    new_password_confirmation: yup
-      .string()
-      .when("isChangePassword", {
-        is: true,
-        then: yup.string().required("Please retype your new password").min(6),
-      })
-      .oneOf([yup.ref("new_password")], "New password does not match"),
   });
 
   const form = useForm({
-    defaultValues: {
-      // isChangePassword: false,
-    },
     resolver: yupResolver(schema),
   });
 
-  // useEffect(() => {
-  //   user &&
-  //     form.reset({
-  //       name: user.name,
-  //       email: user.email,
-  //       phone: user.phone,
-  //       gender: user.gender,
-  //       birthday: user.birthday,
-  //       isChangePassword: false,
-  //     });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [user]);
-
-  const handleSubmit = (values) => {};
-
-  // useEffect(() => {
-  //   const checkBox = document.querySelector(
-  //     ".user-information .right .checkbox"
-  //   );
-  //   const eventCheck = () => {
-  //     form.trigger([
-  //       "old_password",
-  //       "new_password",
-  //       "new_password_confirmation",
-  //     ]);
-  //   };
-  //   checkBox && window.addEventListener("change", eventCheck);
-  //   return () => window.removeEventListener("change", eventCheck);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
+  useEffect(() => {
+    if (user) {
+      form.reset({
+        name: user.fullname,
+        email: user.email,
+        phone: user.phone,
+        gender: user.gender,
+      });
+    }
+  }, []);
+  const handleSubmit = (values) => {
+    console.log("values", values);
+  };
+  const handleCancel = () => {
+    form.reset({
+      name: user.fullname,
+      email: user.email,
+      phone: user.phone,
+      gender: user.gender,
+    });
+  };
   return (
     <form
       onSubmit={form.handleSubmit(handleSubmit)}
@@ -91,39 +59,36 @@ function UserInformationForm(props) {
         <InputField name="email" form={form} label="Email" />
         <InputField name="phone" form={form} label="Số điện thoại" />
         <GenderField name="gender" form={form} label="Giới tính" />
-        <InputField name="birthday" type="date" form={form} label="Ngày Sinh" />
-        <Button type="submit" style={{ width: "50px" }}>
-          Lưu
-        </Button>
+        <div style={{ display: "flex" }}>
+          <button
+            type="submit"
+            style={{
+              width: "100px",
+              height: "40px",
+              marginTop: "20px",
+              backgroundColor: "#01adab",
+              color: "white",
+              borderRadius: "5px",
+            }}
+          >
+            Lưu
+          </button>
+          <button
+            type="submit"
+            style={{
+              width: "100px",
+              height: "40px",
+              marginTop: "20px",
+              marginLeft: "10px",
+              borderRadius: "5px",
+            }}
+            onClick={handleCancel}
+          >
+            Huỷ
+          </button>
+        </div>
       </div>
       <div className="right"></div>
-      {/*
-        <InputField
-          type="checkbox"
-          name="isChangePassword"
-          form={form}
-          label="Thay đổi mật khẩu"
-          className="checkbox"
-        />
-        <PasswordField
-          name="old_password"
-          form={form}
-          label="Mật khẩu"
-          placeholder="Nhập mật khẩu"
-        />
-        <PasswordField
-          name="new_password"
-          form={form}
-          label="Mật khẩu mới"
-          placeholder="Mật khẩu từ 6 đến 32 ký tự"
-        />
-        <PasswordField
-          name="new_password_confirmation"
-          form={form}
-          label="Xác nhận mật khẩu mới"
-          placeholder="Mật khẩu từ 6 đến 32 ký tự"
-        />
-      </div> */}
     </form>
   );
 }

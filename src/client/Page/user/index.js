@@ -6,20 +6,21 @@ import Hearder from "../../components/Header";
 import Footer from "../../components/Footer";
 import Order from "./oder";
 import { useParams } from "react-router-dom";
+import ChangePassWord from "./changePassword";
+import { Breadcrumb } from "antd";
 function User(props) {
   const { id } = useParams();
-  console.log();
   const [a, setA] = useState("");
   useEffect(() => {
     setA(getTitleHeader());
   }, [id]);
-  console.log("id", id);
-  console.log("a", id);
   const getTitleHeader = () => {
     switch (id) {
       case "0":
         return "THÔNG TIN TÀI KHOẢN";
       case "1":
+        return "THAY ĐỔI MẬT KHẨU";
+      case "2":
         return "QUẢN LÝ ĐƠN HÀNG";
       default:
         return "";
@@ -28,6 +29,12 @@ function User(props) {
   return (
     <>
       <Hearder />
+      <div>
+        <Breadcrumb>
+          <Breadcrumb.Item href="">Trang chủ</Breadcrumb.Item>
+          <Breadcrumb.Item href="">User</Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
       <div className="user">
         <div className="container">
           <div className="user__content">
@@ -41,9 +48,9 @@ function User(props) {
                   {id === "0" ? (
                     <UserInformationForm />
                   ) : id === "1" ? (
-                    <Order />
+                    <ChangePassWord />
                   ) : (
-                    <div>hihi</div>
+                    <Order />
                   )}
                 </div>
               </div>

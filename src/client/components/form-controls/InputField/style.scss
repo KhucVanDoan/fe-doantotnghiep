@@ -1,7 +1,7 @@
 .input-field {
   overflow: hidden;
-  margin-top: 4px;
-  min-height: 70px;
+  margin-top: 0px;
+  min-height: 50px;
 
   label {
     display: block;
@@ -16,7 +16,7 @@
 
   textarea,
   input {
-    margin-top: 6px;
+    margin-top: 1px;
     width: 100%;
     outline: none;
     border-radius: 7px;

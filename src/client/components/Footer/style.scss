@@ -1,8 +1,4 @@
 footer {
-  // @include breakpoint-custom-max(1024px) {
-  //   display: none;
-  // }
-
   .footer__commit {
     display: flex;
     padding: 10px 15px;
@@ -54,7 +50,7 @@ footer {
   }
 
   .footer__contact {
-    background-color: #01adab;
+    background-color: #6168681c;
     padding: 20px 0;
 
     .wrap {

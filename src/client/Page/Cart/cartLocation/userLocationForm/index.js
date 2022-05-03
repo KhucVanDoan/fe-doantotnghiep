@@ -35,7 +35,6 @@ function UserLocationForm(props) {
         quantity: item.quantity,
       })),
     };
-    console.log("aa", params);
   };
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)} className="user-location">

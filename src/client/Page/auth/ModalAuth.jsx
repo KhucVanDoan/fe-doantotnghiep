@@ -1,13 +1,16 @@
 import React, { useState } from "react";
+import TakeOtp from "./TakeOTP";
+import Forgot from "./ForgotPassword";
 import Login from "./Login";
-
 import "./modal-auth.scss";
 import Register from "./Register";
 export const MODE = {
   LOGIN: "login",
   REGISTER: "register",
+  OTP: "OTP",
+  FORGOTPASSWORD: "FORGOTPASSWORD",
 };
-function ModalAuth({ setModalIsOpen }) {
+function ModalAuth({ setModalIsOpen, changeUser, setChangeUser }) {
   const [mode, setMode] = useState(MODE.LOGIN);
 
   return (
@@ -31,9 +34,18 @@ function ModalAuth({ setModalIsOpen }) {
       </div>
       <div className="content">
         {mode === MODE.LOGIN ? (
-          <Login setModalIsOpen={setModalIsOpen} />
-        ) : (
+          <Login
+            setModalIsOpen={setModalIsOpen}
+            changeUser={changeUser}
+            setChangeUser={setChangeUser}
+            setMode={setMode}
+          />
+        ) : mode === MODE.REGISTER ? (
           <Register setMode={setMode} />
+        ) : mode === MODE.OTP ? (
+          <TakeOtp setMode={setMode} />
+        ) : (
+          <Forgot setMode={setMode} />
         )}
       </div>
     </div>

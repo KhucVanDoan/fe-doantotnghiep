@@ -12,10 +12,16 @@ function SideBarUser(props) {
       title: "Thông tin tài khoản",
       className: "category-item",
     },
-
     {
       id: 2,
       path: "/user/1",
+      search: "",
+      title: "Thay đổi mật khẩu",
+      className: "category-item",
+    },
+    {
+      id: 3,
+      path: "/user/2",
       search: "",
       title: "Quản lý đơn hàng",
       className: "category-item",

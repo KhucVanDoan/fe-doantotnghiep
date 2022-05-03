@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid } from "@material-ui/core";
 import Product from "../Product";
 
 function ProductList({ data }) {

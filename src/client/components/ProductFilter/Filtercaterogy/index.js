@@ -1,29 +1,36 @@
-import { Box } from "@mui/material";
-import { Button, Form, Input, Select, Typography } from "antd";
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-function FilterByCategory({ onChange }) {
-  const categoryList = [
-    {
-      id: 1,
-      name: "CASIO",
-    },
-    {
-      id: 2,
-      name: "CASIO",
-    },
-    {
-      id: 3,
-      name: "CASIO",
-    },
-  ];
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-  const thuonghieu = [
+FilterByCategory.propTypes = {};
+const useStyle = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(2),
+  },
+  menu: {
+    padding: 0,
+    margin: 0,
+    listStyleType: "none",
+    "& > li": {
+      marginTop: theme.spacing(1),
+      transition: "all .25s",
+      "&:hover": {
+        color: theme.palette.primary.dark,
+        cursor: "pointer",
+      },
+    },
+  },
+}));
+
+function FilterByCategory({ filters, onChange }) {
+  // const [categoryList, setCategoryList] = useState([]);
+
+  const categoryList = [
     {
       id: 1,
       name: "hihi",
@@ -37,17 +44,45 @@ function FilterByCategory({ onChange }) {
       name: "hehe",
     },
   ];
-  const handleChange = () => {};
-  const { Option } = Select;
+  const classes = useStyle();
+  // useEffect(() => {
+  //   (async () => {
+  //     const response = await categoryApi.getAll();
+  //     setCategoryList(response.data.map((x) => ({ id: x.id, name: x.name })));
+  //   })();
+  // }, []);
+  const handleCategoryClick = (category) => {
+    // if (onChange) {
+    //   onChange(category.id);
+    // }
+  };
+  const handleChange = (e) => {
+    if (!onChange) return;
+    const { name, checked } = e.target;
+
+    if (onChange) onChange({ [name]: checked });
+  };
   return (
-    <div>
-      <div>
-        <p>Thuương hiệu</p>
-        <Select style={{ width: 120 }} onChange={handleChange}>
-          <Option value="1">hihi</Option>
-        </Select>
-      </div>
-    </div>
+    <Box className={classes.root}>
+      <Typography variant="subtitle2">Danh mục sản phẩm</Typography>
+      <ul className={classes.menu}>
+        {categoryList.map((category) => (
+          <li key={category.id}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={Boolean(filters[category.id])}
+                  onChange={handleChange}
+                  name={category.id}
+                  color="primary"
+                />
+              }
+              label={category.name}
+            />
+          </li>
+        ))}
+      </ul>
+    </Box>
   );
 }
 

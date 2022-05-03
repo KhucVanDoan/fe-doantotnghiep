@@ -3,6 +3,7 @@ import { AutoComplete } from "antd";
 import React from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import GenderField from "../../components/form-controls/GenderField";
 import InputField from "../../components/form-controls/InputField";
 import PasswordField from "../../components/form-controls/PasswordField";
 function RegisterForm(props) {
@@ -26,6 +27,7 @@ function RegisterForm(props) {
       email: "",
       password: "",
       phone: "",
+      gender: 1,
     },
     resolver: yupResolver(schema),
   });
@@ -62,12 +64,7 @@ function RegisterForm(props) {
           form={form}
           label="Số điện thoại"
         />
-        <InputField
-          placeholder="Nam/Nữ"
-          name="gender"
-          form={form}
-          label="Giới tính"
-        />
+        <GenderField name="gender" form={form} label="Giới tính" />
         <button className="button-submit" type="submit">
           Đăng ký
         </button>

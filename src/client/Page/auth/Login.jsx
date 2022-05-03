@@ -5,18 +5,22 @@ import { getProfile, login } from "../../redux/actions/auth.action";
 import LoginForm from "./LoginForm";
 
 function Login(props) {
-  const { setModalIsOpen } = props;
+  const { setModalIsOpen, changeUser, setChangeUser, setMode } = props;
   const dispatch = useDispatch();
   const handelSubmit = (values) => {
     dispatch(
       login(values, () => {
-        toast.success("Đăng nhập thành công")
+        toast.success("Đăng nhập thành công");
         setModalIsOpen(false);
-        dispatch(getProfile());
+        dispatch(
+          getProfile(() => {
+            setChangeUser(!changeUser);
+          })
+        );
       })
     );
   };
-  return <LoginForm onSubmit={handelSubmit} />;
+  return <LoginForm onSubmit={handelSubmit} setMode={setMode} />;
 }
 
 export default Login;

@@ -4,17 +4,22 @@ import { useNavigate } from "react-router-dom";
 import userIcon from "../../assets/img/user-icon.svg";
 import ModalAuth from "../../Page/auth/ModalAuth";
 import "./style.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/auth.action";
 import { isEmpty } from "lodash";
+import { notification } from "antd";
 Hearder.propTypes = {};
 function Hearder(props) {
   const [inputSearch, setInputSearch] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [count, setCount] = useState([]);
   const { change, changeCart } = props;
+  const [changeUser, setChangeUser] = useState(false);
+  const [user, setUser] = useState({});
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth);
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")));
+  }, [changeUser]);
   const handleSubmit = () => {};
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -28,15 +33,24 @@ function Hearder(props) {
   }, [change, changeCart]);
   const countQuantity = count?.reduce((arr, cur) => arr + cur.quantity, 0);
   const handleLoginLogout = () => {
-    if (isEmpty(user?.user)) {
+    if (isEmpty(user)) {
       setModalIsOpen(true);
     } else {
-      dispatch(logout());
+      dispatch(
+        logout(() => {
+          window.location.href = "/";
+        })
+      );
     }
   };
   const handleUser = () => {
-    if (!isEmpty(user?.user)) {
+    if (!isEmpty(user)) {
       navigate("/user/0");
+    } else {
+      notification.open({
+        message: "Vui lòng đăng nhập",
+        description: "",
+      });
     }
   };
   return (
@@ -83,10 +97,10 @@ function Hearder(props) {
 
             <div className="user-log">
               <div onClick={handleLoginLogout}>
-                {isEmpty(user?.user) ? "Đăng Nhập" : "Đăng Xuất"}
+                {isEmpty(user) ? "Đăng Nhập" : "Đăng Xuất"}
               </div>
               <div onClick={handleUser}>
-                {isEmpty(user?.user) ? "Tài khoản" : user?.user?.fullname}
+                {isEmpty(user) ? "Tài khoản" : user?.fullname}
               </div>
             </div>
           </div>
@@ -121,7 +135,11 @@ function Hearder(props) {
           },
         }}
       >
-        <ModalAuth setModalIsOpen={setModalIsOpen} />
+        <ModalAuth
+          setModalIsOpen={setModalIsOpen}
+          changeUser={changeUser}
+          setChangeUser={setChangeUser}
+        />
       </Modal>
     </Fragment>
   );

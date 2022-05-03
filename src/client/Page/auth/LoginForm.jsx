@@ -7,7 +7,7 @@ import PasswordField from "../../components/form-controls/PasswordField";
 import { toast } from "react-toastify";
 
 function LoginForm(props) {
-  const { onSubmit } = props;
+  const { onSubmit, setMode } = props;
   const schema = yup.object().shape({
     phone: yup.string().required("Please enter your phone"),
     password: yup.string().required("Please enter your password").min(6),
@@ -48,14 +48,7 @@ function LoginForm(props) {
         />
         <p className="forget-password">
           Quên mật khẩu? Nhấn vào
-          <strong
-            onClick={() => {
-              toast.warn("Chức năng đang phát triển!");
-            }}
-          >
-            {" "}
-            đây
-          </strong>
+          <strong onClick={() => setMode("OTP")}> đây</strong>
         </p>
         <button className="button-submit" type="submit">
           Đăng nhập

@@ -33,7 +33,11 @@ function Cart() {
 
           {countQuantity <= 0 || countQuantity === undefined || (
             <div className="cart__right">
-              <CartTotal />
+              <CartTotal
+                // products={products}
+                changeCart={changeCart}
+                setChangeCart={setChangeCart}
+              />
             </div>
           )}
         </div>

@@ -18,7 +18,6 @@ export const listCategory = (query) => {
         data: response.data,
       });
     } catch (error) {
-      console.log(error?.message || error);
       notification.open({
         message: "Thất bại",
         description: error?.message || error,
@@ -36,7 +35,6 @@ export const listChildrenCategoryById = (query) => {
         data: response.data,
       });
     } catch (error) {
-      console.log(error?.message || error);
       notification.open({
         message: "Thất bại",
         description: error?.message || error,
@@ -54,7 +52,6 @@ export const listChildrenCategory = (query) => {
         data: response.data,
       });
     } catch (error) {
-      console.log(error?.message || error);
       notification.open({
         message: "Thất bại",
         description: error?.message || error,
@@ -81,7 +78,6 @@ export const createCategory = (data, cb) => {
         cb();
       }
     } catch (error) {
-      console.log(error?.message || error);
       notification.open({
         message: "Thất bại",
         description: error?.message || error,
@@ -108,7 +104,6 @@ export const updateCategory = (id, data, cb) => {
         cb();
       }
     } catch (error) {
-      console.log(error?.message || error);
       notification.open({
         message: "Thất bại",
         description: error?.message || error,
@@ -135,7 +130,6 @@ export const deleteCategory = (id, cb) => {
         cb();
       }
     } catch (error) {
-      console.log(error?.message || error);
       notification.open({
         message: "Thất bại",
         description: error?.message || error,
@@ -153,7 +147,6 @@ export const detailCategory = (id) => {
         data: response.data,
       });
     } catch (error) {
-      console.log(error?.message || error);
       notification.open({
         message: "Thất bại",
         description: error?.message || error,
@@ -171,7 +164,6 @@ export const detailChildrenCategory = (id) => {
         data: response.data,
       });
     } catch (error) {
-      console.log(error?.message || error);
       notification.open({
         message: "Thất bại",
         description: error?.message || error,

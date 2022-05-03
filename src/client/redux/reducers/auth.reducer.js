@@ -21,13 +21,14 @@ const authReducer = (state = initialState, action) => {
         refreshToken: action.refreshToken,
       };
     case types.GET_PROFILE:
+      action.onSuccess();
       return {
         ...state,
         user: action.user,
       };
     case types.LOGOUT:
       localStorage.clear();
-      action.callBack();
+      action.onSuccess();
       return {
         token: null,
         refreshToken: null,

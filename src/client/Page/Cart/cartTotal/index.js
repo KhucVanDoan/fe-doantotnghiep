@@ -2,21 +2,22 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
-import { useSelector } from "react-redux";
 import { formatMoney } from "../../../common/common";
 
-const CartTotal = ({ setCodeSale }) => {
+const CartTotal = ({ setCodeSale, changeCart, setChangeCart }) => {
   const [isConfirm, setIsConfirm] = useState(false);
   const [display, setDisplay] = useState(false);
   const [input, setInput] = useState("");
-  const history = useNavigate();
-  const location = useLocation();
-  const countCart = useSelector((state) => state.cart);
-  const price = countCart?.cartItem?.reduce(
-    (arr, cur) => arr + cur.price * cur.quantity,
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    setProducts(JSON.parse(localStorage.getItem("CART")));
+  }, [changeCart]);
+  const price = products?.reduce(
+    (arr, cur) => arr + cur.quantity * cur.price,
     0
   );
-  console.log("e", input);
+  const history = useNavigate();
+  const location = useLocation();
   const salePrice = 0;
   const navigate = useNavigate();
   useEffect(() => {
@@ -33,6 +34,7 @@ const CartTotal = ({ setCodeSale }) => {
     if (!isConfirm) {
       history("/cart/order");
       setIsConfirm(true);
+      setChangeCart(!changeCart);
       return;
     }
   };
@@ -69,7 +71,8 @@ const CartTotal = ({ setCodeSale }) => {
           <span>Phí vận chuyển</span> <span>{0}</span>
         </p>
         <p>
-          <span>Thành Tiền:</span> <span>{price - salePrice || 0}</span>
+          <span>Thành Tiền:</span>{" "}
+          <span>{formatMoney(+(price - salePrice)) || 0}</span>
         </p>
       </div>
       {!display && (

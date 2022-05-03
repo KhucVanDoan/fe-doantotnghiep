@@ -1,14 +1,20 @@
-import { Box } from "@mui/material";
 import React from "react";
+import { Box } from "@material-ui/core";
 import FilterByPrice from "./FilterbyPrice";
 import FilterByCategory from "./Filtercaterogy";
-const handleCategoreChange = () => {};
-const handleFilterChange = () => {};
-const ProductFilter = () => {
+const ProductFilter = ({ filters, onChange }) => {
+  const handleCategoreChange = (values) => {
+    if (!onChange) return;
+    onChange(values);
+  };
+  const handlePriceChange = (values) => {
+    if (!onChange) return;
+    onChange(values);
+  };
   return (
     <Box>
-      <FilterByCategory onChange={handleCategoreChange} />
-      <FilterByPrice onChange={handleFilterChange} />
+      <FilterByCategory filters={filters} onChange={handleCategoreChange} />
+      <FilterByPrice onChange={handlePriceChange} />
     </Box>
   );
 };
