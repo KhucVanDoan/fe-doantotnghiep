@@ -35,7 +35,7 @@ const Footer = () => {
               <Link to="/" className="item__detail">
                 <img src={phoneIcon} alt="phone logo" />
                 <p>
-                  Gọi ngay <strong>1800 6768</strong> (tư vấn miễn phí)
+                  Gọi ngay <strong>19000325</strong> (tư vấn miễn phí)
                 </p>
               </Link>
             </div>
@@ -57,15 +57,22 @@ const Footer = () => {
       <div className="container footer__info">
         <div className="info__content">
           <div className="content__locate">
-            {/* <img src={phanoLinkLogoColor} alt="brand color logo" /> */}
+            <img
+              src="https://xwatch.vn/images/config/logo-xwatch-216-62_1616143160.png"
+              style={{ backgroundColor: "black" }}
+              alt="brand color logo"
+            />
             <div className="locate__address">
-              <p>ĐỒNG HỒ</p>
-              <p>Địa chỉ:HIHI</p>
+              <p>
+                Miền Bắc: 2 Xã Đàn, Đống Đa, Hà Nội | Hotline: 0247.306.3555
+              </p>
+              <p>
+                Miền Nam: 378 Lý Thái Tổ, P10, Q10 (Vòng xoay Ngã Bảy) |
+                Hotline: 1900 0325 (Nhánh 2)
+              </p>
             </div>
             <div className="locate__contact">
-              <p>MST: 0304860663</p>
-              <p>Email: @gmail.com</p>
-              <p>Tel: 0379 339 693</p>
+              <p>Giờ làm việc: 9h - 12h và 13h - 18h (Từ thứ 2 - thứ 7)</p>
             </div>
           </div>
           <div className="content__assist">

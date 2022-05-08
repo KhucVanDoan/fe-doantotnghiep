@@ -4,6 +4,8 @@ import {
   getProfileService,
   loginService,
   registerService,
+  update,
+  updatePassword,
 } from "../../service/auth.service";
 import * as types from "../constants";
 
@@ -79,5 +81,20 @@ export const logout = (onSuccess) => {
       type: types.LOGOUT,
       onSuccess,
     });
+  };
+};
+export const updateUser = (params, onSuccess) => {
+  return async (dispatch) => {
+    const response = await update(params);
+    dispatch({
+      type: types.UPDATE,
+      onSuccess,
+    });
+  };
+};
+export const changePassword = (params, onSuccess) => {
+  return async (dispatch) => {
+    const response = await updatePassword(params);
+    onSuccess();
   };
 };

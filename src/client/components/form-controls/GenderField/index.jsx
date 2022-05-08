@@ -18,7 +18,6 @@ function GenderField(props) {
               <input
                 id="user-sex-male"
                 value={1}
-                // eslint-disable-next-line
                 checked={value == 1}
                 disabled={disable}
                 onClick={onChange}
@@ -39,17 +38,17 @@ function GenderField(props) {
                 name={name}
               />
               <label htmlFor="user-sex-female">{title ? title[1] : "Nữ"}</label>
-              {/* <input
-                id='user-sex-other'
-                value='other'
-                defaultChecked={value === 'other'}
+              <input
+                id="user-sex-other"
+                value={3}
+                Checked={value === 3}
                 disabled={disable}
                 onClick={onChange}
                 onBlur={onBlur}
-                type='radio'
+                type="radio"
                 name={name}
               />
-              <label htmlFor='user-sex-other'>Khác</label> */}
+              <label htmlFor="user-sex-other">Khác</label>
             </div>
 
             {invalid && <span>{error?.message}</span>}

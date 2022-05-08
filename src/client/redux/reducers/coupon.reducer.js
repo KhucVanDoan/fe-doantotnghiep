@@ -23,6 +23,12 @@ const couponReducer = (state = initialState, action) => {
         ...state,
         item: action.data,
       };
+    case types.CHECK_COUPON:
+      return {
+        ...state,
+        item: action.data,
+      };
+
     default:
       return state;
   }

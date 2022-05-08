@@ -7,10 +7,12 @@ import Footer from "../../components/Footer";
 import Order from "./oder";
 import { useParams } from "react-router-dom";
 import ChangePassWord from "./changePassword";
-import { Breadcrumb } from "antd";
+import DetailOrder from "./DetailOrder";
 function User(props) {
   const { id } = useParams();
   const [a, setA] = useState("");
+  const [idOrder, setIdOrder] = useState(null);
+  const [changeInfo, setChangeInfo] = useState(false);
   useEffect(() => {
     setA(getTitleHeader());
   }, [id]);
@@ -28,13 +30,7 @@ function User(props) {
   };
   return (
     <>
-      <Hearder />
-      <div>
-        <Breadcrumb>
-          <Breadcrumb.Item href="">Trang chủ</Breadcrumb.Item>
-          <Breadcrumb.Item href="">User</Breadcrumb.Item>
-        </Breadcrumb>
-      </div>
+      <Hearder changeInfo={changeInfo} />
       <div className="user">
         <div className="container">
           <div className="user__content">
@@ -46,11 +42,16 @@ function User(props) {
                 <div className="user-header">{a}</div>
                 <div className="user-content">
                   {id === "0" ? (
-                    <UserInformationForm />
+                    <UserInformationForm
+                      changeInfo={changeInfo}
+                      setChangeInfo={setChangeInfo}
+                    />
                   ) : id === "1" ? (
                     <ChangePassWord />
+                  ) : id === "2" ? (
+                    <Order setIdOrder={setIdOrder} />
                   ) : (
-                    <Order />
+                    <DetailOrder idOrder={idOrder} />
                   )}
                 </div>
               </div>

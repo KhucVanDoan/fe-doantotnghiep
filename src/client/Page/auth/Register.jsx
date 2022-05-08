@@ -7,12 +7,13 @@ function Register(props) {
   const { setMode } = props;
   const distpatch = useDispatch();
   const handleSubmit = async (values) => {
+    console.log("values", values);
     const params = {
       fullname: values?.name,
       phone: values?.phone,
       email: values?.email,
-      password: values?.phone,
-      gender: values?.gender === "nam" || values?.gender === "Nam" ? 1 : 0,
+      password: values?.password,
+      gender: values?.gender,
     };
     distpatch(
       register(params, () => {

@@ -1,5 +1,10 @@
 import { notification } from "antd";
-import { changeStatus, detail, list } from "../../service/order.service";
+import {
+  changeStatus,
+  createOrder,
+  detail,
+  list,
+} from "../../service/order.service";
 import * as types from "../constants";
 
 export const listOrder = (query) => {
@@ -47,7 +52,7 @@ export const changeStatusOrder = (id, data, cb) => {
   };
 };
 
-export const detailOrder = (id) => {
+export const detailOrders = (id) => {
   return async (dispatch) => {
     try {
       const response = await detail(id);
@@ -62,5 +67,11 @@ export const detailOrder = (id) => {
         description: error?.message || error,
       });
     }
+  };
+};
+export const createOrders = (data, onSuccess) => {
+  return async (dispatch) => {
+    const response = await createOrder(data);
+    onSuccess();
   };
 };

@@ -3,8 +3,11 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import PasswordField from "../../../components/form-controls/PasswordField";
+import { useDispatch } from "react-redux";
+import { changePassword } from "../../../redux/actions/auth.action";
 
 const ChangePassWord = () => {
+  const dispatch = useDispatch();
   const schema = yup.object().shape({
     old_password: yup
       .string()
@@ -31,7 +34,20 @@ const ChangePassWord = () => {
     resolver: yupResolver(schema),
   });
   const handelSubmit = (values) => {
-    console.log("values", values);
+    const params = {
+      oldPassword: values?.old_password,
+      newPassword: values?.new_password,
+    };
+    dispatch(
+      changePassword(params, () => {
+        console.log("aaa");
+        form.reset({
+          old_password: "",
+          new_password: "",
+          new_password_confirmation: "",
+        });
+      })
+    );
   };
   return (
     <div

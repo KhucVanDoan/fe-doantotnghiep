@@ -18,6 +18,7 @@ function TakeOtp(props) {
   });
 
   const handelSubmit = (values) => {
+    console.log("values", values);
     setMode("FORGOTPASSWORD");
   };
   return (

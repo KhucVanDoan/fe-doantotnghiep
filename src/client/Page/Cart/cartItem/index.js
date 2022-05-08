@@ -5,6 +5,7 @@ import "./style.scss";
 import { deleteItem } from "../../../redux/actions/cart.action";
 import { useDispatch } from "react-redux";
 import { formatMoney } from "../../../common/common";
+import { ROOT_URL } from "../../../constants/config";
 const CartItem = ({ onChange, item, changeCart, setChangeCart }) => {
   const dispatch = useDispatch();
   const handleButtonDeleteClick = () => {
@@ -14,10 +15,11 @@ const CartItem = ({ onChange, item, changeCart, setChangeCart }) => {
     if (!onChange) return;
     onChange(item.id, value);
   };
+  console.log("item", item);
   return (
     <div className="item">
       <Link to={`/product/`}>
-        <img src={item?.images} alt="" />
+        <img src={`${ROOT_URL}/${item?.images?.url}`} alt="" />
       </Link>
 
       <div className="item__info">
@@ -28,45 +30,10 @@ const CartItem = ({ onChange, item, changeCart, setChangeCart }) => {
           </Fragment>
         </div>
         <div className="price">
-          {formatMoney(+(item.price * item.quantity))}
-          {/* {loading ? (
-            <Fragment>
-              <Skeleton height={20} width={120} />
-              <Skeleton height={20} width={90} />
-            </Fragment>
-          ) : (
-            <Fragment>
-              <p className='price__new'>
-                {isPromo && priceAfterDiscount
-                  ? (priceAfterDiscount * item.quantity).toLocaleString(
-                      'it-IT',
-                      {
-                        style: 'currency',
-                        currency: 'VND',
-                      }
-                    )
-                  : price * item.quantity
-                  ? (price * item.quantity).toLocaleString('it-IT', {
-                      style: 'currency',
-                      currency: 'VND',
-                    })
-                  : ''}
-                &nbsp;
-              </p>
-              {product.discount !== 'No' && (
-                <span className='price__discount'>-{product.discount}</span>
-              )}
-              {isPromo && (
-                <span className='price__old'>
-                  {(price * item.quantity).toLocaleString('it-IT', {
-                    style: 'currency',
-                    currency: 'VND',
-                  })}
-                  &nbsp;
-                </span>
-              )}
-            </Fragment> 
-          )}*/}
+          <div>{formatMoney(+(item.salePrice * item.quantity))}</div>
+          <div className="price-old">
+            {formatMoney(+(item.price * item.quantity))}
+          </div>
         </div>
         <Quantity count={item?.quantity} onChange={handleQuantityChange} />
       </div>

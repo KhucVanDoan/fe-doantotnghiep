@@ -3,7 +3,7 @@ import { Box } from "@material-ui/core";
 import FilterByPrice from "./FilterbyPrice";
 import FilterByCategory from "./Filtercaterogy";
 const ProductFilter = ({ filters, onChange }) => {
-  const handleCategoreChange = (values) => {
+  const handleBranchChange = (values) => {
     if (!onChange) return;
     onChange(values);
   };
@@ -13,7 +13,7 @@ const ProductFilter = ({ filters, onChange }) => {
   };
   return (
     <Box>
-      <FilterByCategory filters={filters} onChange={handleCategoreChange} />
+      <FilterByCategory onChange={handleBranchChange} />
       <FilterByPrice onChange={handlePriceChange} />
     </Box>
   );

@@ -65,8 +65,7 @@
           border-color: yellow transparentyellow transparent;
         }
       }
-      &__old {
-        font-size: 10px;
+      .price-old {
         text-decoration: line-through;
         color: grey;
       }

@@ -30,12 +30,12 @@ const useStyle = makeStyles((theme) => ({
 function FilterByPrice({ onChange }) {
   const classes = useStyle();
   const [price, setPrice] = useState({
-    price_gte: 0,
-    price_lte: 0,
+    minPrice: 0,
+    maxPrice: 0,
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
-    //e.persist()
+    e.persist();
     setPrice({
       ...price,
       [name]: value,
@@ -43,24 +43,20 @@ function FilterByPrice({ onChange }) {
   };
   const handleSubmit = () => {
     if (onChange) onChange(price);
-    setPrice({
-      price_gte: 0,
-      price_lte: 0,
-    });
   };
   return (
     <Box className={classes.root}>
       <Typography variant="subtittle2">Giá</Typography>
       <Box className={classes.range}>
         <TextField
-          name="price_gte"
-          value={price.price_gte}
+          name="minPrice"
+          value={price.minPrice}
           onChange={handleChange}
         />
         <span>-</span>
         <TextField
-          name="price_lte"
-          value={price.price_lte}
+          name="maxPrice"
+          value={price.maxPrice}
           onChange={handleChange}
         />
       </Box>

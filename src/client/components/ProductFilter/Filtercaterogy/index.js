@@ -1,11 +1,10 @@
-import {
-  Box,
-  Checkbox,
-  FormControlLabel,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
+import { Box, makeStyles, Typography } from "@material-ui/core";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { listBranch } from "../../../redux/actions/branch.action";
 
 FilterByCategory.propTypes = {};
 const useStyle = makeStyles((theme) => ({
@@ -27,61 +26,36 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-function FilterByCategory({ filters, onChange }) {
+function FilterByCategory({ onChange }) {
   // const [categoryList, setCategoryList] = useState([]);
-
-  const categoryList = [
-    {
-      id: 1,
-      name: "hihi",
-    },
-    {
-      id: 2,
-      name: "haha",
-    },
-    {
-      id: 3,
-      name: "hehe",
-    },
-  ];
+  const [age, setAge] = useState("");
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.branch);
+  useEffect(() => {
+    dispatch(listBranch());
+  }, []);
   const classes = useStyle();
-  // useEffect(() => {
-  //   (async () => {
-  //     const response = await categoryApi.getAll();
-  //     setCategoryList(response.data.map((x) => ({ id: x.id, name: x.name })));
-  //   })();
-  // }, []);
-  const handleCategoryClick = (category) => {
-    // if (onChange) {
-    //   onChange(category.id);
-    // }
-  };
   const handleChange = (e) => {
     if (!onChange) return;
-    const { name, checked } = e.target;
-
-    if (onChange) onChange({ [name]: checked });
+    setAge(e.target.value);
+    onChange(e.target.value);
   };
   return (
     <Box className={classes.root}>
-      <Typography variant="subtitle2">Danh mục sản phẩm</Typography>
-      <ul className={classes.menu}>
-        {categoryList.map((category) => (
-          <li key={category.id}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={Boolean(filters[category.id])}
-                  onChange={handleChange}
-                  name={category.id}
-                  color="primary"
-                />
-              }
-              label={category.name}
-            />
-          </li>
-        ))}
-      </ul>
+      <Typography variant="subtitle2">thương hiệu</Typography>
+      <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <Select
+          value={age}
+          onChange={handleChange}
+          displayEmpty
+          style={{ height: "40px", width: " 197px" }}
+        >
+          <MenuItem value={null}>Tất cả</MenuItem>
+          {state?.items?.map((item) => (
+            <MenuItem value={item?.id}>{item?.name}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </Box>
   );
 }

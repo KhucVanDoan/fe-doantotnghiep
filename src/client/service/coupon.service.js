@@ -8,3 +8,4 @@ export const create = (data) => axios.post(APIEnum.COUPON, data);
 export const update = (id, data) => axios.put(`${APIEnum.COUPON}/${id}`, data);
 export const remove = (id) => axios.delete(`${APIEnum.COUPON}/${id}`);
 export const detail = (id) => axios.get(`${APIEnum.COUPON}/${id}`);
+export const check = (code) => axios.post(`${APIEnum.COUPON}/check`, { code });

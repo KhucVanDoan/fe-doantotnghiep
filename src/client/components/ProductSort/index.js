@@ -1,20 +1,20 @@
 import { Tab, Tabs } from "@mui/material";
 import React from "react";
 
-function ProductSort({ currentSort, onchange }) {
+function ProductSort({ current, onchange }) {
   const handleSortChange = (e, newValue) => {
     if (onchange) onchange(newValue);
   };
   return (
     <Tabs
-      value={currentSort}
+      value={current ? current : ""}
       onChange={handleSortChange}
       textColor="primary"
       indicatorColor="primary"
       aria-label="disabled tabs example"
     >
-      <Tab label="Giá thấp đến cao" value="salePrice:ASC"></Tab>
-      <Tab label="Giá cao đến thấp" value="salePrice:DESC"></Tab>
+      <Tab label="Giá tăng dần " value={-1}></Tab>
+      <Tab label="Giá giảm dần" value={1}></Tab>
     </Tabs>
   );
 }

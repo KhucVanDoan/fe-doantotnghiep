@@ -5,7 +5,8 @@ import CartTotal from "../cartTotal";
 import "./style.scss";
 import UserLocationForm from "./userLocationForm";
 function CartLocationConfirm(props) {
-  const [codeSale, setCodeSale] = useState(7);
+  const [codeSale, setCodeSale] = useState(null);
+  console.log("code", codeSale);
   return (
     <>
       <Hearder />

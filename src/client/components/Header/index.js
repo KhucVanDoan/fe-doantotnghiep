@@ -1,6 +1,6 @@
 import Modal from "react-modal/lib/components/Modal";
 import React, { Fragment, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import userIcon from "../../assets/img/user-icon.svg";
 import ModalAuth from "../../Page/auth/ModalAuth";
 import "./style.scss";
@@ -13,22 +13,22 @@ function Hearder(props) {
   const [inputSearch, setInputSearch] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [count, setCount] = useState([]);
-  const { change, changeCart } = props;
+  const { change, changeCart, changeInfo } = props;
   const [changeUser, setChangeUser] = useState(false);
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user")));
-  }, [changeUser]);
+  }, [changeUser, changeInfo]);
+
   const handleSubmit = () => {};
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     setInputSearch(inputValue);
   };
   const navigate = useNavigate();
-
-  console.log("count", count);
   useEffect(() => {
+    console.log("aa");
     setCount(JSON.parse(localStorage.getItem("CART")));
   }, [change, changeCart]);
   const countQuantity = count?.reduce((arr, cur) => arr + cur.quantity, 0);
@@ -56,13 +56,15 @@ function Hearder(props) {
   return (
     <Fragment>
       <header>
+        <Link to="/">
+          <img
+            src="https://xwatch.vn/images/config/logo-xwatch-216-62_1616143160.png
+              "
+            alt=""
+            style={{ marginLeft: "20px", marginTop: "-16px" }}
+          />
+        </Link>
         <div className="header container">
-          {/* <Link to="/" className="header__logo">
-            <img
-              src="http://localhost:3001/static/media/header-logo.85f71fe6.svg"
-              alt=""
-            />
-          </Link> */}
           <div className="header__search">
             <form onSubmit={handleSubmit} className="header__search-main">
               <input

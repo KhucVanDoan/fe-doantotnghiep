@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import Hearder from "../../components/Header";
-import ProductFilter from "../../components/ProductFilter";
 import ProductList from "../../components/ProductList";
 import { Box, Container, Grid, makeStyles, Paper } from "@material-ui/core";
-import ProductSort from "../../components/ProductFilter/productSort/ProductSort";
-
+import ProductSort from "../../components/ProductSort";
+import { useDispatch, useSelector } from "react-redux";
+import { listItem } from "../../redux/actions/item.action";
+import FilterByPrice from "../../components/ProductFilter/FilterbyPrice";
+import FilterByCategory from "../../components/ProductFilter/Filtercaterogy";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
 const useStyle = makeStyles((theme) => ({
   root: {},
   left: {
@@ -17,139 +21,73 @@ const useStyle = makeStyles((theme) => ({
 }));
 function MenWatch(props) {
   const classes = useStyle();
-  const [filters, setFilters] = useState({ sort: "salePrice:ASC" });
-  // useEffect(() => {
-  //   history.push({
-  //     path: history.location.path,
-  //     search: queryString.stringify(fillter),
-  //   });
-  // }, [history, fillter]);
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const response = await productApi.getAll(fillter);
-  //       console.log(response.data);
-  //       setProductList(response.data.data);
-  //       setPanigation(response.pagination);
-  //       console.log(response.pagination);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //     setloading(false);
-  //   })();
-  // }, [fillter]);
-  // const handleChange = (e, page) => {
-  //   setFillter((prevFillter) => ({
-  //     ...prevFillter,
-  //     _page: page,
-  //   }));
-  // };
-  // const handleSortChange = (newSortValue) => {
-  //   setFillter((prevFillter) => ({
-  //     ...prevFillter,
-  //     _sort: newSortValue,
-  //   }));
-  // };
-  // const handleFilterChange = (newFilters) => {
-  //   setFillter((prevFillter) => ({
-  //     ...prevFillter,
-  //     ...newFilters,
-  //   }));
-  // };
-  // const setNewFilter = (newFilters) => {
-  //   setFillter(newFilters);
-  // };
-  const data = [
-    {
-      id: 1,
-      name: "hihi",
-      description: "mô tả",
-      price: 12000,
-      images:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp6TYyygFqRExAzfKhdkpeMFVVplL0SSNd2w&usqp=CAU",
-    },
-    {
-      id: 2,
-      name: "hihi",
-      description: "mô tả",
-      price: 12000,
-      images:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp6TYyygFqRExAzfKhdkpeMFVVplL0SSNd2w&usqp=CAU",
-    },
-    {
-      id: 3,
-      name: "hihi",
-      description: "mô tả",
-      price: 12000,
-      images:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp6TYyygFqRExAzfKhdkpeMFVVplL0SSNd2w&usqp=CAU",
-    },
-    {
-      id: 3,
-      name: "hihi",
-      description: "mô tả",
-      price: 12000,
-      images:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp6TYyygFqRExAzfKhdkpeMFVVplL0SSNd2w&usqp=CAU",
-    },
-    {
-      id: 3,
-      name: "hihi",
-      description: "mô tả",
-      price: 12000,
-      images:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp6TYyygFqRExAzfKhdkpeMFVVplL0SSNd2w&usqp=CAU",
-    },
-    {
-      id: 3,
-      name: "hihi",
-      description: "mô tả",
-      price: 12000,
-      images:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp6TYyygFqRExAzfKhdkpeMFVVplL0SSNd2w&usqp=CAU",
-    },
-    {
-      id: 3,
-      name: "hihi",
-      description: "mô tả",
-      price: 12000,
-      images:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp6TYyygFqRExAzfKhdkpeMFVVplL0SSNd2w&usqp=CAU",
-    },
-  ];
-  const handleFilterChange = (newFilters) => {
-    setFilters((prevFillter) => ({
-      ...prevFillter,
-      ...newFilters,
-    }));
+  const [filters, setFilters] = useState({ categoryId: 5 });
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.item);
+
+  useEffect(() => {
+    dispatch(listItem(filters));
+  }, [filters]);
+  const handlePriceChange = (newFilters) => {
+    console.log("newFilters", newFilters);
+    // setFilters({
+    //   ...filters,
+    //   branchId: newFilters,
+    // });
+  };
+  const handleBranchChange = (newFilters) => {
+    console.log("newFilters", newFilters);
+    // setFilters({
+    //   ...filters,
+    //   branchId: newFilters,
+    // });
   };
   const handleSortChange = (newSortValue) => {
-    setFilters((prevFillter) => ({
-      ...prevFillter,
-      sort: newSortValue,
-    }));
+    setFilters({
+      ...filters,
+      orderPrice: newSortValue,
+    });
   };
   return (
     <>
       <Hearder />
+      <div
+        style={{
+          paddingTop: "20px",
+          paddingLeft: "62px",
+          backgroundColor: "rgb(235, 231, 231)",
+        }}
+      >
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" href="/">
+            Trang chủ
+          </Link>
+          <Link
+            underline="hover"
+            color="inherit"
+            href="/material-ui/getting-started/installation/"
+          >
+            Đồng hồ nữ
+          </Link>
+        </Breadcrumbs>
+        <h2 style={{ paddingTop: "20px" }}>Đồng hồ nữ </h2>
+      </div>
       <Box pt={3} style={{ backgroundColor: "#ebe7e7" }}>
         <Container>
           <Grid container spacing={0.5}>
             <Grid item className={classes.left}>
               <Paper elevation={0}>
-                <ProductFilter
-                  filters={filters}
-                  onChange={handleFilterChange}
-                />
+                <FilterByCategory onChange={handleBranchChange} />
+                <FilterByPrice onChange={handlePriceChange} />
               </Paper>
             </Grid>
             <Grid item className={classes.right}>
               <Paper elevation={1}>
                 <ProductSort
-                  currentSort={filters.sort}
+                  current={filters?.orderPrice}
                   onchange={handleSortChange}
                 />
-                <ProductList data={data} />
+                <ProductList data={productList?.items} />
               </Paper>
             </Grid>
           </Grid>

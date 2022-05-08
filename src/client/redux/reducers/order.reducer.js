@@ -21,6 +21,11 @@ const orderReducer = (state = initialState, action) => {
         ...state,
         item: action.data,
       };
+    case types.CREATE_ORDER:
+      action.onSuccess();
+      return {
+        ...state,
+      };
     default:
       return state;
   }

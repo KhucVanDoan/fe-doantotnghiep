@@ -8,6 +8,7 @@ function Login(props) {
   const { setModalIsOpen, changeUser, setChangeUser, setMode } = props;
   const dispatch = useDispatch();
   const handelSubmit = (values) => {
+    console.log("vaues", values);
     dispatch(
       login(values, () => {
         toast.success("Đăng nhập thành công");

@@ -5,7 +5,6 @@ import CartItem from "../cartItem/index";
 import { updateCart } from "../../../redux/actions/cart.action";
 function CartProductList(props) {
   const { changeCart, setChangeCart } = props;
-  console.log("changeCart", changeCart);
   const [cartList, setCartList] = useState([]);
   useEffect(() => {
     setCartList(JSON.parse(localStorage.getItem("CART")));

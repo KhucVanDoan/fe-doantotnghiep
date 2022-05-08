@@ -15,6 +15,7 @@ const userReducer = (state = initialState, action) => {
         meta: action.data.meta,
       };
     case types.UPDATE_USER:
+      action.cb();
       return state;
     default:
       return state;

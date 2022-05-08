@@ -25,6 +25,7 @@ function Cart() {
               <CartEmpty />
             ) : (
               <CartProductList
+                products={products}
                 changeCart={changeCart}
                 setChangeCart={setChangeCart}
               />

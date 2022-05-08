@@ -1,32 +1,42 @@
 import { Box } from "@mui/material";
-import { Typography } from "antd";
 import React from "react";
 import { useNavigate } from "react-router";
 import { formatMoney } from "../../common/common";
-
+import { ROOT_URL } from "../../constants/config";
+import "./style.css";
 function Product({ product }) {
   const history = useNavigate();
+  console.log("product", product);
   return (
     <Box
-      padding={1}
       onClick={(e) => {
         e.preventDefault();
         history(`/product/${product.id}/detail`);
       }}
       to={`/product/${product.id}`}
+      className="product"
     >
       <Box padding={1}>
-        <img src={product.images} alt={product.name} width="100%" />
+        <img
+          src={`${ROOT_URL}/${product?.itemImages[0]?.url}`}
+          alt={product.name}
+          width="100%"
+          className="product_img"
+        />
       </Box>
-      <h3 style={{ padding: "5px 20px" }}>{product.name}</h3>
-      <Typography
-        variant="body2"
-        style={{ textAlign: "center", color: "grey" }}
-      >
-        <Box component="span" fontSize="16px" fontWeight="bold" mr={1}>
-          {formatMoney(product.price)}
-        </Box>
-      </Typography>
+      <h3 style={{ padding: "5px 20px", textAlign: "center" }}>
+        {product.name}
+      </h3>
+      <div className="price">
+        <div className={product?.salePrice > 0 ? "price-old" : "price"}>
+          {formatMoney(product?.price)}
+        </div>
+        {product?.salePrice > 0 ? (
+          <div className="price-current">{formatMoney(product?.salePrice)}</div>
+        ) : (
+          ""
+        )}{" "}
+      </div>
     </Box>
   );
 }

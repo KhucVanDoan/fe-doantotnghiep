@@ -7,3 +7,5 @@ export const list = (query) =>
 export const detail = (id) => axios.get(`${APIEnum.ORDER}/${id}`);
 export const changeStatus = (id, data) =>
   axios.put(`${APIEnum.ORDER}/${id}/change-status`, data);
+export const createOrder = (data) =>
+  axios.post(`${APIEnum.ORDER}/checkout-public`, data);

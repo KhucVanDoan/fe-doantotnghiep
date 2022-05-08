@@ -12,7 +12,7 @@ header {
     align-items: center;
     height: 100%;
     width: 100%;
-    margin-top: 10px;
+    margin-top: -43px;
     &__logo {
       width: 175px;
       cursor: pointer;
@@ -22,7 +22,7 @@ header {
       flex-grow: 1;
       max-width: 705px;
       margin: 0 20px;
-      margin-left: 250px;
+      margin-left: 270px;
       &-main {
         display: flex;
         height: 40px;
@@ -68,7 +68,7 @@ header {
         height: 50px;
         line-height: 50px;
         width: 1349px;
-        margin-left: -250px;
+        margin-left: -271px;
         display: flex;
         justify-content: space-between;
         div {

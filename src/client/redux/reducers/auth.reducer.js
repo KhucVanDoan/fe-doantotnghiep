@@ -26,6 +26,11 @@ const authReducer = (state = initialState, action) => {
         ...state,
         user: action.user,
       };
+    case types.UPDATE:
+      action.onSuccess();
+      return {
+        ...state,
+      };
     case types.LOGOUT:
       localStorage.clear();
       action.onSuccess();

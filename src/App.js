@@ -9,6 +9,7 @@ import DoubleWatch from "./client/Page/DoubleWatch";
 import HomePage from "./client/Page/Homepage";
 import MenWatch from "./client/Page/MenPage";
 import User from "./client/Page/user";
+import DetailOrder from "./client/Page/user/DetailOrder";
 import WomenWatch from "./client/Page/WomenWatch";
 import { useStore } from "./client/redux/store";
 
@@ -26,6 +27,7 @@ function App(props) {
           <Route path="/cart" element={<Cart />} />
           <Route path="/cart/order" element={<CartLocationConfirm />} />
           <Route path="/user/:id" element={<User />} />
+          <Route path="/user/:id/detailOrder" element={<DetailOrder />} />
           <Route element={<NotFound />} />
         </Routes>
       </Provider>

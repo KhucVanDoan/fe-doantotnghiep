@@ -3,43 +3,57 @@ import "./style.scss";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 import { formatMoney } from "../../../common/common";
-
+import { useDispatch, useSelector } from "react-redux";
+import { checkCoupon } from "../../../redux/actions/coupon.action";
 const CartTotal = ({ setCodeSale, changeCart, setChangeCart }) => {
-  const [isConfirm, setIsConfirm] = useState(false);
+  const [isConfirm, setIsConfirm] = useState(true);
   const [display, setDisplay] = useState(false);
-  const [input, setInput] = useState("");
+  const [codeCoupon, setcodeCoupon] = useState("");
   const [products, setProducts] = useState([]);
+  const [isSubmit, setIsSubmit] = useState(true);
+
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.coupon);
   useEffect(() => {
     setProducts(JSON.parse(localStorage.getItem("CART")));
   }, [changeCart]);
+
   const price = products?.reduce(
-    (arr, cur) => arr + cur.quantity * cur.price,
+    (arr, cur) =>
+      arr + cur.quantity * (cur?.salePrice ? cur.salePrice : cur.price),
     0
   );
   const history = useNavigate();
   const location = useLocation();
-  const salePrice = 0;
+
   const navigate = useNavigate();
   useEffect(() => {
     if (location.pathname === "/cart/order") {
-      setIsConfirm(true);
+      setIsConfirm(false);
       setDisplay(true);
     } else {
-      setIsConfirm(false);
+      setIsConfirm(true);
       setDisplay(false);
     }
   }, [location.pathname]);
-
   const handleClick = () => {
-    if (!isConfirm) {
-      history("/cart/order");
-      setIsConfirm(true);
-      setChangeCart(!changeCart);
-      return;
-    }
+    history("/cart/order");
+    setIsConfirm(false);
+    setChangeCart(!changeCart);
+    return;
   };
   const handleBack = () => {
     navigate(-1);
+  };
+  const handleCoupon = () => {
+    setIsSubmit(!isSubmit);
+    if (codeCoupon) {
+      dispatch(checkCoupon(codeCoupon));
+      if (state?.item) {
+        console.log("vao day khoông");
+        setCodeSale(state?.item?.id);
+      }
+    }
   };
   return (
     <>
@@ -52,9 +66,9 @@ const CartTotal = ({ setCodeSale, changeCart, setChangeCart }) => {
             <input
               type="text"
               placeholder="Nhập mã giảm giá...."
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) => setcodeCoupon(e.target.value)}
             />
-            <button>ÁP DỤNG</button>
+            <button onClick={handleCoupon}>ÁP DỤNG</button>
           </div>
         </div>
       )}
@@ -64,15 +78,28 @@ const CartTotal = ({ setCodeSale, changeCart, setChangeCart }) => {
           <span>Tạm Tính:</span>
           <span>{formatMoney(+price)}</span>
         </p>
-        <p>
-          <span>Giảm Giá:</span> <span>{salePrice || 0}</span>
-        </p>
-        <p>
-          <span>Phí vận chuyển</span> <span>{0}</span>
-        </p>
+        {isConfirm ? (
+          ""
+        ) : (
+          <p>
+            <span>Giảm Giá:</span>{" "}
+            <span>
+              {" "}
+              {formatMoney(
+                state?.item?.value ? (price * state?.item?.value) / 100 : 0
+              ) || 0}
+            </span>
+          </p>
+        )}
         <p>
           <span>Thành Tiền:</span>{" "}
-          <span>{formatMoney(+(price - salePrice)) || 0}</span>
+          <span>
+            {formatMoney(
+              state?.item?.value
+                ? price - (price * state?.item?.value) / 100
+                : price
+            ) || 0}
+          </span>
         </p>
       </div>
       {!display && (

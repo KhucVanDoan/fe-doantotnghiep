@@ -18,6 +18,10 @@ function BannerSlide() {
       url: "https://thegioidongho.vip/thumb/crop/15785/1240/400/",
     },
     {
+      name: "anh 5",
+      url: "https://thegioidongho.vip/thumb/crop/15782/1240/400/",
+    },
+    {
       name: "anh 4",
       url: bannerII,
     },
@@ -30,19 +34,13 @@ function BannerSlide() {
     dots: true,
     infinite: true,
     autoplay: true,
-    speed: 500,
+    speed: 300,
     slidesToShow: 1,
     slidesToScroll: 1,
   };
   return (
     <div>
       <Slider className="slider" {...settings}>
-        <div className="slider__item">
-          <img
-            src="https://thegioidongho.vip/thumb/crop/15782/1240/400/"
-            alt="hihi"
-          />
-        </div>
         {bannerList.map((item) => (
           <div key={item?.name} className="slider__item">
             <img src={item?.url} alt="hihi" />
