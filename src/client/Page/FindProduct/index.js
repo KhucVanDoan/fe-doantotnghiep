@@ -10,7 +10,6 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import FilterByPrice from "../../components/ProductFilter/FilterbyPrice";
 import FilterByCategory from "../../components/ProductFilter/Filtercaterogy";
-import { Pagination } from "@mui/material";
 const useStyle = makeStyles((theme) => ({
   root: {},
   left: {
@@ -20,28 +19,27 @@ const useStyle = makeStyles((theme) => ({
     flex: "1 1 0",
   },
 }));
-function MenWatch(props) {
+function FindProduct(props) {
   const classes = useStyle();
-  const [filters, setFilters] = useState({ categoryId: 7 });
-  const productList = useSelector((state) => state.item);
+  const [filters, setFilters] = useState({});
   const dispatch = useDispatch();
-  const [page, setPage] = useState(1);
+  const productList = useSelector((state) => state.item);
   useEffect(() => {
     dispatch(listItem(filters));
   }, [filters]);
   const handlePriceChange = (newFilters) => {
-    console.log("newFilters", newFilters);
-    // setFilters({
-    //   ...filters,
-    //   branchId: newFilters,
-    // });
+    setFilters({
+      ...filters,
+      minPrice: newFilters?.minPrice,
+      maxPrice: newFilters?.maxPrice,
+    });
   };
   const handleBranchChange = (newFilters) => {
     console.log("newFilters", newFilters);
-    // setFilters({
-    //   ...filters,
-    //   branchId: newFilters,
-    // });
+    setFilters({
+      ...filters,
+      branchId: newFilters,
+    });
   };
   const handleSortChange = (newSortValue) => {
     setFilters({
@@ -49,16 +47,9 @@ function MenWatch(props) {
       orderPrice: newSortValue,
     });
   };
-  const handleChange = (event, value) => {
-    setPage(value);
-    setFilters({
-      ...filters,
-      page: value,
-    });
-  };
   return (
     <>
-      <Hearder />
+      <Hearder setFilters={setFilters} filters={filters} />
       <div
         style={{
           paddingTop: "20px",
@@ -75,10 +66,9 @@ function MenWatch(props) {
             color="inherit"
             href="/material-ui/getting-started/installation/"
           >
-            Đồng hồ đôi
+            Tìm kiếm sản phẩm
           </Link>
         </Breadcrumbs>
-        <h2 style={{ paddingTop: "20px" }}>Đồng hồ đôi </h2>
       </div>
       <Box pt={3} style={{ backgroundColor: "#ebe7e7" }}>
         <Container>
@@ -96,16 +86,6 @@ function MenWatch(props) {
                   onchange={handleSortChange}
                 />
                 <ProductList data={productList?.items} />
-                <Pagination
-                  style={{
-                    float: "right",
-                    marginBottom: "40px",
-                    marginTop: "-40px",
-                  }}
-                  count={Math.ceil(productList.meta.total / 8)}
-                  page={page}
-                  onChange={handleChange}
-                />
               </Paper>
             </Grid>
           </Grid>
@@ -116,4 +96,4 @@ function MenWatch(props) {
   );
 }
 
-export default MenWatch;
+export default FindProduct;

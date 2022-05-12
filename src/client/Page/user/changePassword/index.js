@@ -18,7 +18,6 @@ const ChangePassWord = () => {
       .string()
       .required("Please enter your new password")
       .min(6),
-
     new_password_confirmation: yup
       .string()
       .required("Please retype your new password")

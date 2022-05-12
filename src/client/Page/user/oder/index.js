@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { Modal, Pagination } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listOrder } from "../../../redux/actions/order.action";
@@ -8,15 +8,18 @@ import "./style.css";
 import { formatMoney } from "../../../common/common";
 const Order = ({ setIdOrder }) => {
   const order = useSelector((state) => state.order);
+  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [id, setid] = useState();
   const navigate = useNavigate();
   console.log("order", order);
-  useEffect(() => {
-    dispatch(listOrder({ isMy: 1 }));
-  }, []);
 
+  const onChange = (page) => {
+    setPage(page);
+  };
+  useEffect(() => {
+    dispatch(listOrder({ isMy: 1, page: page }));
+  }, []);
+  console.log("page", page);
   const handleClick = (id) => {
     setIdOrder(id);
     navigate("/user/orderDetail");
@@ -61,6 +64,14 @@ const Order = ({ setIdOrder }) => {
           </tr>
         ))}
       </table>
+      <div>
+        <Pagination
+          className="pagination"
+          current={page}
+          total={order?.meta?.total}
+          onChange={onChange}
+        />
+      </div>
     </>
   );
 };

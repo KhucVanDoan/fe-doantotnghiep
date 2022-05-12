@@ -10,25 +10,29 @@ import { isEmpty } from "lodash";
 import { notification } from "antd";
 Hearder.propTypes = {};
 function Hearder(props) {
-  const [inputSearch, setInputSearch] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [count, setCount] = useState([]);
-  const { change, changeCart, changeInfo } = props;
+  const { change, changeCart, changeInfo, setFilters, filters } = props;
   const [changeUser, setChangeUser] = useState(false);
   const [user, setUser] = useState({});
+  const [valueInput, setValueInput] = useState("");
   const dispatch = useDispatch();
+
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user")));
   }, [changeUser, changeInfo]);
-
-  const handleSubmit = () => {};
-  const handleInputChange = (e) => {
-    const inputValue = e.target.value;
-    setInputSearch(inputValue);
-  };
   const navigate = useNavigate();
+  const handleSubmit = () => {
+    navigate("/find-product");
+    if (valueInput) {
+      setFilters({ ...filters, keyword: valueInput });
+    }
+  };
+  const handleInputChange = (e) => {
+    setValueInput(e.target.value);
+  };
+
   useEffect(() => {
-    console.log("aa");
     setCount(JSON.parse(localStorage.getItem("CART")));
   }, [change, changeCart]);
   const countQuantity = count?.reduce((arr, cur) => arr + cur.quantity, 0);
@@ -38,7 +42,7 @@ function Hearder(props) {
     } else {
       dispatch(
         logout(() => {
-          window.location.href = "/";
+          navigate("/");
         })
       );
     }
@@ -61,23 +65,22 @@ function Hearder(props) {
             src="https://xwatch.vn/images/config/logo-xwatch-216-62_1616143160.png
               "
             alt=""
-            style={{ marginLeft: "20px", marginTop: "-16px" }}
+            style={{ marginLeft: "20px", marginTop: "-16px", width: "200px" }}
           />
         </Link>
         <div className="header container">
           <div className="header__search">
-            <form onSubmit={handleSubmit} className="header__search-main">
+            <div className="header__search-main">
               <input
-                onChange={handleInputChange}
-                value={inputSearch}
-                type="text"
+                onChange={(e) => handleInputChange(e)}
+                value={valueInput}
                 placeholder="Tìm kiếm..."
               />
-              <button type="submit">
+              <button onClick={handleSubmit}>
                 <i className="fas fa-search"></i>
                 <span>Tìm kiếm</span>
               </button>
-            </form>
+            </div>
             <div className="header__search-product">
               <div className="menu">
                 <div onClick={() => navigate("/")}>TRANG CHỦ</div>

@@ -4,8 +4,6 @@ import { ROOT_URL } from "../../../constants/config";
 import "./style.scss";
 function ImageSlide(props) {
   const { imageList } = props;
-  console.log("imageList", imageList);
-
   const settings = {
     dots: true,
     infinite: true,

@@ -6,7 +6,6 @@ import { ROOT_URL } from "../../constants/config";
 import "./style.css";
 function Product({ product }) {
   const history = useNavigate();
-  console.log("product", product);
   return (
     <Box
       onClick={(e) => {
@@ -24,8 +23,11 @@ function Product({ product }) {
           className="product_img"
         />
       </Box>
-      <h3 style={{ padding: "5px 20px", textAlign: "center" }}>
-        {product.name}
+      <h3
+        classeName="name "
+        style={{ padding: "5px 20px", textAlign: "center", height: "70px" }}
+      >
+        {`${product.name.slice(0, 30)}...`}
       </h3>
       <div className="price">
         <div className={product?.salePrice > 0 ? "price-old" : "price"}>

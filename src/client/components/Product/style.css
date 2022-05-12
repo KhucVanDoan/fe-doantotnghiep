@@ -11,6 +11,19 @@
   box-shadow: 0 1px 20px 0 rgb(0, 0, 0, 0.05);
   transform: translateY(-1px);
 }
+.name {
+  overflow: hidden;
+  display: block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  height: 1.8rem;
+  white-space: nowrap;
+}
+.product_img {
+  height: 270px;
+}
 .product_img:hover {
   transition: all 0.7s ease 0s !important;
   -webkit-transition: all 0.7s ease 0s;

@@ -13,8 +13,8 @@ function ProductSort({ current, onchange }) {
       indicatorColor="primary"
       aria-label="disabled tabs example"
     >
-      <Tab label="Giá tăng dần " value={-1}></Tab>
-      <Tab label="Giá giảm dần" value={1}></Tab>
+      <Tab label="Giá giảm dần " value={-1}></Tab>
+      <Tab label="Giá tăng dần" value={1}></Tab>
     </Tabs>
   );
 }

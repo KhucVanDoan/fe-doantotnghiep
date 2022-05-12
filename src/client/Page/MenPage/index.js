@@ -10,6 +10,7 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import FilterByPrice from "../../components/ProductFilter/FilterbyPrice";
 import FilterByCategory from "../../components/ProductFilter/Filtercaterogy";
+import { Pagination } from "@mui/material";
 const useStyle = makeStyles((theme) => ({
   root: {},
   left: {
@@ -24,6 +25,7 @@ function MenWatch(props) {
   const [filters, setFilters] = useState({ categoryId: 1 });
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.item);
+  const [page, setPage] = useState(1);
   useEffect(() => {
     dispatch(listItem(filters));
   }, [filters]);
@@ -48,12 +50,20 @@ function MenWatch(props) {
       orderPrice: newSortValue,
     });
   };
+  const handleChange = (event, value) => {
+    setPage(value);
+    setFilters({
+      ...filters,
+      page: value,
+    });
+  };
+  console.log(page);
   return (
     <>
       <Hearder />
       <div
         style={{
-          paddingTop: "20px",
+          paddingTop: "10px",
           paddingLeft: "62px",
           backgroundColor: "rgb(235, 231, 231)",
         }}
@@ -70,7 +80,7 @@ function MenWatch(props) {
             Đồng hồ nam
           </Link>
         </Breadcrumbs>
-        <h2 style={{ paddingTop: "20px" }}>Đồng hồ nam </h2>
+        <h2 style={{ paddingTop: "10px" }}>Đồng hồ nam </h2>
       </div>
       <Box pt={3} style={{ backgroundColor: "#ebe7e7" }}>
         <Container>
@@ -88,6 +98,16 @@ function MenWatch(props) {
                   onchange={handleSortChange}
                 />
                 <ProductList data={productList?.items} />
+                <Pagination
+                  style={{
+                    float: "right",
+                    marginBottom: "40px",
+                    marginTop: "-40px",
+                  }}
+                  count={Math.ceil(productList.meta.total / 8)}
+                  page={page}
+                  onChange={handleChange}
+                />
               </Paper>
             </Grid>
           </Grid>

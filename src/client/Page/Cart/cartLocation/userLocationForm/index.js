@@ -53,8 +53,12 @@ function UserLocationForm(props) {
         quantity: item.quantity,
       })),
     };
-    console.log("param", params);
-    // dispatch(createOrders(params, () => localStorage.removeItem("CART")));
+    dispatch(
+      createOrders(params, () => {
+        localStorage.removeItem("CART");
+        history("/order/success");
+      })
+    );
   };
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)} className="user-location">

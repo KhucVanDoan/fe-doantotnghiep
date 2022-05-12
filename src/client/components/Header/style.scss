@@ -2,17 +2,13 @@ header {
   height: 120px;
   padding: 20px 0;
   background-color: #111;
-  // z-index: 11111;
-  // position: fixed;
-  // left: 0;
-  // right: 0;
-  // top: 0;
+
   .header {
     display: flex;
     align-items: center;
     height: 100%;
     width: 100%;
-    margin-top: -43px;
+    margin-top: -38px;
     &__logo {
       width: 175px;
       cursor: pointer;

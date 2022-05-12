@@ -10,6 +10,7 @@ import FilterByPrice from "../../components/ProductFilter/FilterbyPrice";
 import FilterByCategory from "../../components/ProductFilter/Filtercaterogy";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
+import { Pagination } from "@mui/material";
 const useStyle = makeStyles((theme) => ({
   root: {},
   left: {
@@ -23,6 +24,7 @@ function MenWatch(props) {
   const classes = useStyle();
   const [filters, setFilters] = useState({ categoryId: 5 });
   const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
   const productList = useSelector((state) => state.item);
 
   useEffect(() => {
@@ -48,13 +50,20 @@ function MenWatch(props) {
       orderPrice: newSortValue,
     });
   };
+  const handleChange = (event, value) => {
+    setPage(value);
+    setFilters({
+      ...filters,
+      page: value,
+    });
+  };
   return (
     <>
       <Hearder />
       <div
         style={{
-          paddingTop: "20px",
-          paddingLeft: "62px",
+          paddingTop: "10px",
+          paddingLeft: "60px",
           backgroundColor: "rgb(235, 231, 231)",
         }}
       >
@@ -70,7 +79,7 @@ function MenWatch(props) {
             Đồng hồ nữ
           </Link>
         </Breadcrumbs>
-        <h2 style={{ paddingTop: "20px" }}>Đồng hồ nữ </h2>
+        <h2 style={{ paddingTop: "10px" }}>Đồng hồ nữ </h2>
       </div>
       <Box pt={3} style={{ backgroundColor: "#ebe7e7" }}>
         <Container>
@@ -88,6 +97,16 @@ function MenWatch(props) {
                   onchange={handleSortChange}
                 />
                 <ProductList data={productList?.items} />
+                <Pagination
+                  style={{
+                    float: "right",
+                    marginBottom: "40px",
+                    marginTop: "-40px",
+                  }}
+                  count={Math.ceil(productList.meta.total / 8)}
+                  page={page}
+                  onChange={handleChange}
+                />
               </Paper>
             </Grid>
           </Grid>
