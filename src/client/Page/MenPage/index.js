@@ -57,7 +57,6 @@ function MenWatch(props) {
       page: value,
     });
   };
-  console.log(page);
   return (
     <>
       <Hearder />

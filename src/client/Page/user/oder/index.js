@@ -1,21 +1,18 @@
-import { Modal, Pagination } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listOrder } from "../../../redux/actions/order.action";
 import { useNavigate } from "react-router-dom";
-import { OrderStatus, OrderStatusEnum } from "./order-status.const";
+import { OrderStatus } from "./order-status.const";
 import "./style.css";
 import { formatMoney } from "../../../common/common";
+import { Pagination } from "@mui/material";
 const Order = ({ setIdOrder }) => {
   const order = useSelector((state) => state.order);
   const [page, setPage] = useState(1);
+  const [filters, setFilters] = useState({ page });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   console.log("order", order);
-
-  const onChange = (page) => {
-    setPage(page);
-  };
   useEffect(() => {
     dispatch(listOrder({ isMy: 1, page: page }));
   }, []);
@@ -24,7 +21,13 @@ const Order = ({ setIdOrder }) => {
     setIdOrder(id);
     navigate("/user/orderDetail");
   };
-
+  const handleChange = (event, value) => {
+    setPage(value);
+    setFilters({
+      ...filters,
+      page: value,
+    });
+  };
   return (
     <>
       <h3 style={{ marginTop: "-20px", marginBottom: "20px" }}>
@@ -64,14 +67,16 @@ const Order = ({ setIdOrder }) => {
           </tr>
         ))}
       </table>
-      <div>
-        <Pagination
-          className="pagination"
-          current={page}
-          total={order?.meta?.total}
-          onChange={onChange}
-        />
-      </div>
+      <Pagination
+        style={{
+          float: "right",
+          marginBottom: "40px",
+          marginTop: "5px",
+        }}
+        count={Math.ceil(order.meta.total / 8)}
+        page={page}
+        onChange={handleChange}
+      />
     </>
   );
 };

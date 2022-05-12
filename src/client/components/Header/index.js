@@ -42,7 +42,8 @@ function Hearder(props) {
     } else {
       dispatch(
         logout(() => {
-          navigate("/");
+          window.location.href("/");
+          // navigate("/");
         })
       );
     }
