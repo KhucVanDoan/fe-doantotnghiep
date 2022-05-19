@@ -12,11 +12,9 @@ const Order = ({ setIdOrder }) => {
   const [filters, setFilters] = useState({ page });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log("order", order);
   useEffect(() => {
     dispatch(listOrder({ isMy: 1, page: page }));
   }, []);
-  console.log("page", page);
   const handleClick = (id) => {
     setIdOrder(id);
     navigate("/user/orderDetail");

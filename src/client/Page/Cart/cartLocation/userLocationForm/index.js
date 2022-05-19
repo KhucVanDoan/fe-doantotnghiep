@@ -66,8 +66,8 @@ function UserLocationForm(props) {
     };
     dispatch(
       createOrders(params, () => {
-        toast.success("Đặt hàng thành công");
         localStorage.removeItem("CART");
+        toast.success("Đặt hàng thành công");
         history("/order/success");
       })
     );

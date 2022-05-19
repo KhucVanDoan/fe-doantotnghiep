@@ -4,9 +4,10 @@ import { addToCart } from "../../redux/actions/cart.action";
 import Footer from "../Footer";
 import Hearder from "../Header";
 import Quantity from "../Quantity";
+import userIcon from "../../assets/img/user-icon.svg";
 import "./style.css";
 import { useParams } from "react-router";
-import { detailItem } from "../../redux/actions/item.action";
+import { detailItem, reviewItem } from "../../redux/actions/item.action";
 import parse from "html-react-parser";
 import ImageSlide from "./slideImage";
 import { formatMoney } from "../../common/common";
@@ -21,7 +22,8 @@ const DetailProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [change, setChange] = useState(false);
   const [user, setUser] = useState(null);
-
+  const [rate, setRate] = useState(null);
+  const [isReview, setIsview] = useState(false);
   const [valueInput, setValueInput] = useState("");
   const dispatch = useDispatch();
   const productDetail = useSelector((state) => state.item);
@@ -29,7 +31,7 @@ const DetailProduct = () => {
 
   useEffect(() => {
     dispatch(detailItem(id));
-  }, [dispatch, id]);
+  }, [dispatch, id, isReview]);
   useEffect(() => {
     setUser(JSON.parse(localStorage?.getItem("user")));
   }, []);
@@ -64,7 +66,40 @@ const DetailProduct = () => {
   const handleClick = () => {
     dispatch(showModelLogin());
   };
-  const handleComment = () => {};
+  const handleComment = () => {
+    const params = {
+      itemId: +id,
+      rate: rate,
+      content: valueInput,
+    };
+    dispatch(
+      reviewItem(
+        params,
+        () => {
+          setValueInput("");
+          setIsview(!isReview);
+        },
+        () => {
+          toast.info("Bạn đã đánh giá sản phẩm này rồi");
+        }
+      )
+    );
+  };
+  const oneStart = productDetail?.item?.reviews?.filter(
+    (e) => e?.rate === 1
+  )?.length;
+  const twoStart = productDetail?.item?.reviews?.filter(
+    (e) => e?.rate === 2
+  )?.length;
+  const threeStart = productDetail?.item?.reviews?.filter(
+    (e) => e?.rate === 3
+  )?.length;
+  const fourStart = productDetail?.item?.reviews?.filter(
+    (e) => e?.rate === 4
+  )?.length;
+  const fiveStart = productDetail?.item?.reviews?.filter(
+    (e) => e?.rate === 5
+  )?.length;
   return (
     <>
       <Hearder change={change} />
@@ -95,6 +130,18 @@ const DetailProduct = () => {
         </div>
         <div className="product_right">
           <h2>{productDetail?.item?.name}</h2>
+          <div className="review_header">
+            <div className="star-header">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p style={{ marginTop: "7px", marginLeft: "5px" }}>{`(${
+              productDetail?.item?.reviews?.length || 0
+            } đánh giá)`}</p>
+          </div>
           <div className="branch">
             <div>Thương hiệu:</div>
             <span>{productDetail?.item?.branch?.name}</span>
@@ -166,7 +213,9 @@ const DetailProduct = () => {
                 <i class="fa-solid fa-star"></i>
               </div>
               <div>
-                <p>đánh giá & nhận</p>
+                <p>{`${
+                  productDetail?.item?.reviews?.length || 0
+                } đánh giá & nhận`}</p>
               </div>
             </div>
             <div className="review_right">
@@ -175,35 +224,45 @@ const DetailProduct = () => {
                 <div className="hi">
                   <div className="he"></div>
                 </div>
-                <div style={{ marginRight: "20px" }}>0 đánh giá</div>
+                <div
+                  style={{ marginRight: "20px" }}
+                >{`${oneStart} đánh giá`}</div>
               </div>
               <div className="ha">
                 2 <i class="fa-solid fa-star" style={{ color: "yellow" }}></i>
                 <div className="hi">
                   <div className="he"></div>
                 </div>
-                <div style={{ marginRight: "20px" }}>0 đánh giá</div>
+                <div
+                  style={{ marginRight: "20px" }}
+                >{`${twoStart} đánh giá`}</div>
               </div>
               <div className="ha">
                 3 <i class="fa-solid fa-star" style={{ color: "yellow" }}></i>
                 <div className="hi">
                   <div className="he"></div>
                 </div>
-                <div style={{ marginRight: "20px" }}>0 đánh giá</div>
+                <div
+                  style={{ marginRight: "20px" }}
+                >{`${threeStart} đánh giá`}</div>
               </div>
               <div className="ha">
                 4 <i class="fa-solid fa-star" style={{ color: "yellow" }}></i>
                 <div className="hi">
                   <div className="he"></div>
                 </div>
-                <div style={{ marginRight: "20px" }}>0 đánh giá</div>
+                <div
+                  style={{ marginRight: "20px" }}
+                >{`${fourStart} đánh giá`}</div>
               </div>
               <div className="ha">
                 5 <i class="fa-solid fa-star" style={{ color: "yellow" }}></i>
                 <div className="hi">
                   <div className="he"></div>
                 </div>
-                <div style={{ marginRight: "20px" }}>0 đánh giá</div>
+                <div
+                  style={{ marginRight: "20px" }}
+                >{`${fiveStart} đánh giá`}</div>
               </div>
             </div>
           </div>
@@ -220,13 +279,35 @@ const DetailProduct = () => {
                 onChange={(e) => setValueInput(e.target.value)}
               ></input>
               <div className="star-review">
-                <StarRatting />
+                <StarRatting setRate={setRate} rate={rate} />
               </div>
               <button className="button-comment" onClick={handleComment}>
                 Đánh giá
               </button>
             </div>
           )}
+          <div style={{ marginLeft: "15px" }}>
+            <h3 style={{ marginTop: "15px" }}>Đánh giá & bình luận </h3>
+            {productDetail?.item?.reviews?.map((item) => (
+              <>
+                <div style={{ display: "flex" }}>
+                  <h4 style={{ marginTop: "20px", marginRight: "10px" }}>
+                    {item?.fullname}
+                  </h4>
+                  {[...Array(5)]?.map((star, i) => (
+                    <i
+                      class="fa-solid fa-star"
+                      style={{
+                        color: "yellow",
+                        marginTop: "25px",
+                      }}
+                    ></i>
+                  ))}
+                </div>
+                <p style={{ marginLeft: "10px" }}>{item?.content}</p>
+              </>
+            ))}
+          </div>
         </div>
       </div>
       <Footer />

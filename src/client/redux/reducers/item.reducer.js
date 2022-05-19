@@ -23,6 +23,7 @@ const itemReducer = (state = initialState, action) => {
         ...state,
         item: action.data,
       };
+
     default:
       return state;
   }

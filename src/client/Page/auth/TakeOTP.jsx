@@ -3,9 +3,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import InputField from "../../components/form-controls/InputField";
+import { useDispatch } from "react-redux";
+import { takeOTP } from "../../redux/actions/auth.action";
+import { toast } from "react-toastify";
 
 function TakeOtp(props) {
   const { setMode } = props;
+  const dispatch = useDispatch();
   const schema = yup.object().shape({
     phone: yup
       .string()
@@ -21,7 +25,12 @@ function TakeOtp(props) {
   });
 
   const handelSubmit = (values) => {
-    console.log("aa");
+    dispatch(
+      takeOTP(values, () => {
+        toast.success("Mã OTP đã được gửi về số điện thoại");
+        setMode("FORGOTPASSWORD");
+      })
+    );
     setMode("FORGOTPASSWORD");
   };
   return (

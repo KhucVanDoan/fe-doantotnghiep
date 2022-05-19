@@ -190,3 +190,9 @@
   text-align: center;
   margin-right: 30px;
 }
+.review_header {
+  display: flex;
+
+  text-align: center;
+  align-items: center;
+}

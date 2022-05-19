@@ -25,6 +25,7 @@ function FindProduct(props) {
   const [filters, setFilters] = useState({ limit: 8 });
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
+  const [keyword, setKeyword] = useState("");
   const productList = useSelector((state) => state.item);
   useEffect(() => {
     dispatch(listItem(filters));
@@ -82,7 +83,7 @@ function FindProduct(props) {
         <Container>
           <Grid container spacing={0.5}>
             <Grid item className={classes.left}>
-              <Paper elevation={0} style={{ height: "1048px" }}>
+              <Paper elevation={0} style={{ height: "1080px" }}>
                 <FilterByCategory onChange={handleBranchChange} />
                 <FilterByPrice onChange={handlePriceChange} />
               </Paper>

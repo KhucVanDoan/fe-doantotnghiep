@@ -8,3 +8,5 @@ export const getTokenService = (data) => axios.post(APIEnum.GET_TOKEN, data);
 export const update = (data) => axios.put("/auth/update", data);
 export const updatePassword = (data) =>
   axios.put("/auth/update-password", data);
+export const takeOtp = (data) => axios.post("/auth/forgot-password", data);
+export const forgotPassword = (data) => axios.put("/auth/reset-password", data);

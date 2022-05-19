@@ -5,11 +5,17 @@ import { useForm } from "react-hook-form";
 import InputField from "../../components/form-controls/InputField";
 import PasswordField from "../../components/form-controls/PasswordField";
 function ForgotForm(props) {
-  const { setMode } = props;
+  const { onSubmit } = props;
   const schema = yup.object().shape({
-    otp: yup.string().nullable().required("Vui lòng nhập mã otp").min(4),
-    new_password: yup.string().required("Vui lòng nhập mật khẩu mới").min(6),
-
+    otp: yup
+      .string()
+      .nullable()
+      .required("Vui lòng nhập mã otp")
+      .min(4, "mã gồm 4 ký tự"),
+    new_password: yup
+      .string()
+      .required("Vui lòng nhập mật khẩu mới")
+      .min(6, "mật khẩu phải nhiều hơn 6 ký tự"),
     new_password_confirmation: yup
       .string()
       .required("Nhập lại mật khẩu ")
@@ -18,13 +24,18 @@ function ForgotForm(props) {
   });
   const form = useForm({
     defaultValues: {
-      phone: "",
+      otp: "",
       password: "",
+      new_password_confirmation: "",
     },
     resolver: yupResolver(schema),
   });
   const handelSubmit = (values) => {
-    setMode("login");
+    const params = {
+      otp: values?.otp,
+      password: values?.new_password,
+    };
+    onSubmit(params);
   };
   return (
     <div className="section-login">

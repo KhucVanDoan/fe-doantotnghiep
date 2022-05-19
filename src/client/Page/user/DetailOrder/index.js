@@ -121,6 +121,8 @@ const DetailOrder = ({ idOrder }) => {
             marginTop: "20px",
             width: "70px",
             height: "30px",
+            backgroundColor: "gray",
+            borderRadius: "5px",
           }}
           onClick={() => navigate(-1)}
         >

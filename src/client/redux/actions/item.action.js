@@ -4,6 +4,7 @@ import {
   detail,
   list,
   remove,
+  review,
   update,
 } from "../../service/item.service";
 import * as types from "../constants";
@@ -145,5 +146,12 @@ export const detailItem = (id) => {
         description: error?.message || error,
       });
     }
+  };
+};
+export const reviewItem = (params, onSuccess, onError) => {
+  return async (dispatch) => {
+    const response = await review(params);
+    onSuccess();
+    onError();
   };
 };

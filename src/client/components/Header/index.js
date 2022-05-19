@@ -22,14 +22,16 @@ function Hearder(props) {
   const [valueInput, setValueInput] = useState();
   const dispatch = useDispatch();
   const isOpenModal = useSelector((state) => state);
-
   useEffect(() => {
     setUser(JSON.parse(localStorage?.getItem("user")));
   }, [changeUser, changeInfo]);
   const navigate = useNavigate();
   const handleSubmit = () => {
     navigate("/find-product");
-    setFilters({ ...filters, keyword: valueInput });
+    setFilters({
+      ...filters,
+      keyword: valueInput,
+    });
   };
   const handleInputChange = (e) => {
     setValueInput(e.target.value);

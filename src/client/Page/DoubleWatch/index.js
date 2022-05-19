@@ -82,7 +82,7 @@ function MenWatch(props) {
         <Container>
           <Grid container spacing={0.5}>
             <Grid item className={classes.left}>
-              <Paper elevation={0} style={{ height: "1048px" }}>
+              <Paper elevation={0} style={{ height: "1080px" }}>
                 <FilterByCategory onChange={handleBranchChange} />
                 <FilterByPrice onChange={handlePriceChange} />
               </Paper>

@@ -1,9 +1,11 @@
 import { notification } from "antd";
 import { toast } from "react-toastify";
 import {
+  forgotPassword,
   getProfileService,
   loginService,
   registerService,
+  takeOtp,
   update,
   updatePassword,
 } from "../../service/auth.service";
@@ -103,6 +105,18 @@ export const updateUser = (params, onSuccess) => {
 export const changePassword = (params, onSuccess) => {
   return async (dispatch) => {
     const response = await updatePassword(params);
+    onSuccess();
+  };
+};
+export const takeOTP = (params, onSuccess) => {
+  return async (dispatch) => {
+    const response = await takeOtp(params);
+    onSuccess();
+  };
+};
+export const resetPassword = (params, onSuccess) => {
+  return async (dispatch) => {
+    const response = await forgotPassword(params);
     onSuccess();
   };
 };
