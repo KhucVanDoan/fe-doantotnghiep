@@ -26,7 +26,7 @@
 }
 .product_img:hover {
   transition: all 0.7s ease 0s !important;
-  -webkit-transition: all 0.7s ease 0s;
+  -webkit-transition: all 2s ease 0s;
 }
 .price {
   align-items: baseline;

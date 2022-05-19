@@ -7,17 +7,14 @@ import PasswordField from "../../components/form-controls/PasswordField";
 function ForgotForm(props) {
   const { setMode } = props;
   const schema = yup.object().shape({
-    otp: yup.string().nullable().required("Please enter your otp").min(6),
-    new_password: yup
-      .string()
-      .required("Please enter your new password")
-      .min(6),
+    otp: yup.string().nullable().required("Vui lòng nhập mã otp").min(4),
+    new_password: yup.string().required("Vui lòng nhập mật khẩu mới").min(6),
 
     new_password_confirmation: yup
       .string()
-      .required("Please retype your new password")
+      .required("Nhập lại mật khẩu ")
       .min(6)
-      .oneOf([yup.ref("new_password")], "New password does not match"),
+      .oneOf([yup.ref("new_password")], "mật khẩu không khớp nhau"),
   });
   const form = useForm({
     defaultValues: {
@@ -43,13 +40,13 @@ function ForgotForm(props) {
           name="new_password"
           form={form}
           label="Mật khẩu mới"
-          placeholder="Mật khẩu từ 6 đến 32 ký tự"
+          placeholder="Nhập mật khẩu"
         />
         <PasswordField
           name="new_password_confirmation"
           form={form}
           label="Xác nhận mật khẩu mới"
-          placeholder="Mật khẩu từ 6 đến 32 ký tự"
+          placeholder="Nhập mật khẩu"
         />
         <button className="button-submit" type="submit">
           Lưu

@@ -22,15 +22,14 @@ const useStyle = makeStyles((theme) => ({
 }));
 function MenWatch(props) {
   const classes = useStyle();
-  const [filters, setFilters] = useState({ categoryId: 1 });
+  const [filters, setFilters] = useState({ categoryId: 1, limit: 8 });
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.item);
   const [page, setPage] = useState(1);
   useEffect(() => {
     dispatch(listItem(filters));
-  }, [filters]);
+  }, [filters, dispatch]);
   const handlePriceChange = (newFilters) => {
-    console.log("newFilters", newFilters);
     setFilters({
       ...filters,
       minPrice: newFilters?.minPrice,
@@ -38,7 +37,6 @@ function MenWatch(props) {
     });
   };
   const handleBranchChange = (newFilters) => {
-    console.log("newFilters", newFilters);
     setFilters({
       ...filters,
       branchId: newFilters,
@@ -85,12 +83,16 @@ function MenWatch(props) {
         <Container>
           <Grid container spacing={0.5}>
             <Grid item className={classes.left}>
-              <Paper elevation={0}>
+              <Paper elevation={0} style={{ height: "1048px" }}>
                 <FilterByCategory onChange={handleBranchChange} />
                 <FilterByPrice onChange={handlePriceChange} />
               </Paper>
             </Grid>
-            <Grid item className={classes.right}>
+            <Grid
+              item
+              className={classes.right}
+              style={{ backgroundColor: "white" }}
+            >
               <Paper elevation={1}>
                 <ProductSort
                   current={filters?.orderPrice}

@@ -2,12 +2,12 @@ import React from "react";
 import RegisterForm from "./RegisterForm";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/actions/auth.action";
+import { toast } from "react-toastify";
 
 function Register(props) {
   const { setMode } = props;
   const distpatch = useDispatch();
   const handleSubmit = async (values) => {
-    console.log("values", values);
     const params = {
       fullname: values?.name,
       phone: values?.phone,
@@ -17,6 +17,7 @@ function Register(props) {
     };
     distpatch(
       register(params, () => {
+        toast.success("Đăng ký thành công");
         setMode("login");
       })
     );

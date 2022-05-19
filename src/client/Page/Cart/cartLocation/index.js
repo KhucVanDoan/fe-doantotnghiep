@@ -5,21 +5,20 @@ import CartTotal from "../cartTotal";
 import "./style.scss";
 import UserLocationForm from "./userLocationForm";
 function CartLocationConfirm(props) {
-  const [codeSale, setCodeSale] = useState(null);
-  console.log("code", codeSale);
+  const [isUser, setIsUser] = useState(false);
   return (
     <>
-      <Hearder />
+      <Hearder isUser={isUser} setIsUser={setIsUser} />
       <section className="cart_order">
         <div className="container_order">
           <div className="cart__left_order">
             <div className="cart-location-confirm">
               <div className="header">Thông tin đặt hàng</div>
-              <UserLocationForm codeSale={codeSale} />
+              <UserLocationForm isUser={isUser} />
             </div>
           </div>
           <div className="cart__right_order">
-            <CartTotal setCodeSale={setCodeSale} />
+            <CartTotal />
           </div>
         </div>
       </section>

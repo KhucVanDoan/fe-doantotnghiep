@@ -5,12 +5,13 @@ import { useLocation } from "react-router";
 import { formatMoney } from "../../../common/common";
 import { useDispatch, useSelector } from "react-redux";
 import { checkCoupon } from "../../../redux/actions/coupon.action";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const CartTotal = ({ setCodeSale, changeCart, setChangeCart }) => {
   const [isConfirm, setIsConfirm] = useState(true);
   const [display, setDisplay] = useState(false);
-  const [codeCoupon, setcodeCoupon] = useState("");
+  const [codeCoupon, setcodeCoupon] = useState(null);
   const [products, setProducts] = useState([]);
-  const [isSubmit, setIsSubmit] = useState(true);
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state.coupon);
@@ -46,17 +47,15 @@ const CartTotal = ({ setCodeSale, changeCart, setChangeCart }) => {
     navigate(-1);
   };
   const handleCoupon = () => {
-    setIsSubmit(!isSubmit);
     if (codeCoupon) {
       dispatch(checkCoupon(codeCoupon));
-      if (state?.item) {
-        console.log("vao day khoông");
-        setCodeSale(state?.item?.id);
-      }
+    } else {
+      toast.info("Vui lòng nhập mã ");
     }
   };
   return (
     <>
+      <ToastContainer />
       {isConfirm ? (
         ""
       ) : (

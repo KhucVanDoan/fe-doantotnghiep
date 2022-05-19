@@ -73,7 +73,7 @@ const Order = ({ setIdOrder }) => {
           marginBottom: "40px",
           marginTop: "5px",
         }}
-        count={Math.ceil(order.meta.total / 8)}
+        count={Math.ceil(order?.meta?.total / 10)}
         page={page}
         onChange={handleChange}
       />

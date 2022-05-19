@@ -7,7 +7,10 @@ import InputField from "../../components/form-controls/InputField";
 function TakeOtp(props) {
   const { setMode } = props;
   const schema = yup.object().shape({
-    phone: yup.string().required("Please enter your phone"),
+    phone: yup
+      .string()
+      .required("Vui lòng nhập số điện thoại")
+      .matches(/^(0[3|5|7|8|9])+([0-9]{8})$/, "Số điện thoại không hợp lệ"),
   });
 
   const form = useForm({
@@ -18,7 +21,7 @@ function TakeOtp(props) {
   });
 
   const handelSubmit = (values) => {
-    console.log("values", values);
+    console.log("aa");
     setMode("FORGOTPASSWORD");
   };
   return (

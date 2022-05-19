@@ -9,24 +9,25 @@ function BannerSlide() {
       name: "anh 1",
       url: "https://thegioidongho.vip/thumb/crop/12140/1240/400/",
     },
-    {
-      name: "anh 2",
-      url: "https://thegioidongho.vip/thumb/crop/12135/1240/400/",
-    },
+
     {
       name: "anh 3",
       url: "https://thegioidongho.vip/thumb/crop/15785/1240/400/",
     },
     {
-      name: "anh 5",
+      name: "anh 4",
       url: "https://thegioidongho.vip/thumb/crop/15782/1240/400/",
     },
     {
-      name: "anh 4",
-      url: bannerII,
+      name: "anh 2",
+      url: "https://xwatch.vn/images/slideshow/2021/05/10/original/bao-hiem-dong-ho_1620641319.jpg",
     },
     {
-      name: "anh 4",
+      name: "anh 5",
+      url: " https://xwatch.vn/images/slideshow/2020/04/11/original/banner-bao-hanh-trang-chu_1586597010.jpg",
+    },
+    {
+      name: "anh 7",
       url: bannerIII,
     },
   ];

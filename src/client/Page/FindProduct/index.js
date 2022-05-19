@@ -10,6 +10,7 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import FilterByPrice from "../../components/ProductFilter/FilterbyPrice";
 import FilterByCategory from "../../components/ProductFilter/Filtercaterogy";
+import { Pagination } from "@mui/material";
 const useStyle = makeStyles((theme) => ({
   root: {},
   left: {
@@ -21,12 +22,13 @@ const useStyle = makeStyles((theme) => ({
 }));
 function FindProduct(props) {
   const classes = useStyle();
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({ limit: 8 });
+  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.item);
   useEffect(() => {
     dispatch(listItem(filters));
-  }, [filters]);
+  }, [filters, dispatch]);
   const handlePriceChange = (newFilters) => {
     setFilters({
       ...filters,
@@ -35,7 +37,6 @@ function FindProduct(props) {
     });
   };
   const handleBranchChange = (newFilters) => {
-    console.log("newFilters", newFilters);
     setFilters({
       ...filters,
       branchId: newFilters,
@@ -45,6 +46,13 @@ function FindProduct(props) {
     setFilters({
       ...filters,
       orderPrice: newSortValue,
+    });
+  };
+  const handleChange = (event, value) => {
+    setPage(value);
+    setFilters({
+      ...filters,
+      page: value,
     });
   };
   return (
@@ -74,18 +82,38 @@ function FindProduct(props) {
         <Container>
           <Grid container spacing={0.5}>
             <Grid item className={classes.left}>
-              <Paper elevation={0}>
+              <Paper elevation={0} style={{ height: "1048px" }}>
                 <FilterByCategory onChange={handleBranchChange} />
                 <FilterByPrice onChange={handlePriceChange} />
               </Paper>
             </Grid>
-            <Grid item className={classes.right}>
+            <Grid
+              item
+              className={classes.right}
+              style={{ backgroundColor: "white" }}
+            >
               <Paper elevation={1}>
                 <ProductSort
                   current={filters?.orderPrice}
                   onchange={handleSortChange}
                 />
-                <ProductList data={productList?.items} />
+                {productList?.items ? (
+                  <>
+                    <ProductList data={productList?.items} />
+                    <Pagination
+                      style={{
+                        float: "right",
+                        marginBottom: "40px",
+                        marginTop: "-40px",
+                      }}
+                      count={Math.ceil(productList.meta.total / 8)}
+                      page={page}
+                      onChange={handleChange}
+                    />
+                  </>
+                ) : (
+                  ""
+                )}
               </Paper>
             </Grid>
           </Grid>

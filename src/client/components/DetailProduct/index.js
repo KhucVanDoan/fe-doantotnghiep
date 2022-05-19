@@ -11,19 +11,32 @@ import parse from "html-react-parser";
 import ImageSlide from "./slideImage";
 import { formatMoney } from "../../common/common";
 import { Breadcrumbs, Link } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { isEmpty } from "lodash";
+import { showModelLogin } from "../../redux/actions/auth.action";
+import StarRatting from "./commentProduct";
 
 const DetailProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [change, setChange] = useState(false);
+  const [user, setUser] = useState(null);
+
+  const [valueInput, setValueInput] = useState("");
   const dispatch = useDispatch();
   const productDetail = useSelector((state) => state.item);
-  console.log("productDetail", productDetail);
   const { id } = useParams();
+
   useEffect(() => {
     dispatch(detailItem(id));
-  }, [id]);
-
+  }, [dispatch, id]);
+  useEffect(() => {
+    setUser(JSON.parse(localStorage?.getItem("user")));
+  }, []);
   const handleQuantityChange = (newValue) => {
+    if (newValue > productDetail?.item?.stockQuantity) {
+      toast.error("vượt quá số lượng sản phẩm hiện có");
+    }
     setQuantity(newValue);
   };
 
@@ -37,16 +50,25 @@ const DetailProduct = () => {
       stockQuanttity: productDetail?.item?.stockQuantity,
       name: productDetail?.item?.name,
     };
-    dispatch(
-      addToCart(params, () => {
-        setChange(!change);
-      })
-    );
+    if (params?.quantity < params?.stockQuanttity) {
+      dispatch(
+        addToCart(params, () => {
+          toast.success("Thêm vào giỏ hàng thành công");
+          setChange(!change);
+        })
+      );
+    } else {
+      toast.error("vượt quá số lượng sản phẩm hiện có");
+    }
   };
-
+  const handleClick = () => {
+    dispatch(showModelLogin());
+  };
+  const handleComment = () => {};
   return (
     <>
       <Hearder change={change} />
+      <ToastContainer />
       <div
         style={{
           paddingTop: "20px",
@@ -78,9 +100,9 @@ const DetailProduct = () => {
             <span>{productDetail?.item?.branch?.name}</span>
           </div>
           <div className="prices">
-            <span className="priceOld">
+            <div className="priceOld">
               {formatMoney(productDetail?.item?.price)}
-            </span>
+            </div>
             {productDetail?.item?.salePrice > 0 ? (
               <div className="salePrice">
                 {formatMoney(productDetail?.item?.salePrice)}
@@ -128,6 +150,83 @@ const DetailProduct = () => {
         <div className="product_description">
           <h3 style={{ marginBottom: "20px" }}>Mô tả sản phẩm</h3>
           <div>{parse(productDetail?.item?.description || "")}</div>
+        </div>
+      </div>
+      <div className="product_infor">
+        <div className="product_description">
+          <h3 style={{ marginBottom: "20px" }}>Đánh giá sản phẩm</h3>
+          <div className="header_review">
+            <div className="review_left">
+              <h3>5/5</h3>
+              <div className="star-header">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <div>
+                <p>đánh giá & nhận</p>
+              </div>
+            </div>
+            <div className="review_right">
+              <div className="ha">
+                1 <i class="fa-solid fa-star" style={{ color: "yellow" }}></i>
+                <div className="hi">
+                  <div className="he"></div>
+                </div>
+                <div style={{ marginRight: "20px" }}>0 đánh giá</div>
+              </div>
+              <div className="ha">
+                2 <i class="fa-solid fa-star" style={{ color: "yellow" }}></i>
+                <div className="hi">
+                  <div className="he"></div>
+                </div>
+                <div style={{ marginRight: "20px" }}>0 đánh giá</div>
+              </div>
+              <div className="ha">
+                3 <i class="fa-solid fa-star" style={{ color: "yellow" }}></i>
+                <div className="hi">
+                  <div className="he"></div>
+                </div>
+                <div style={{ marginRight: "20px" }}>0 đánh giá</div>
+              </div>
+              <div className="ha">
+                4 <i class="fa-solid fa-star" style={{ color: "yellow" }}></i>
+                <div className="hi">
+                  <div className="he"></div>
+                </div>
+                <div style={{ marginRight: "20px" }}>0 đánh giá</div>
+              </div>
+              <div className="ha">
+                5 <i class="fa-solid fa-star" style={{ color: "yellow" }}></i>
+                <div className="hi">
+                  <div className="he"></div>
+                </div>
+                <div style={{ marginRight: "20px" }}>0 đánh giá</div>
+              </div>
+            </div>
+          </div>
+          {isEmpty(user) ? (
+            <div className="button_login" onClick={handleClick}>
+              <button className="button">Đăng nhập để đánh giá</button>
+            </div>
+          ) : (
+            <div className="comment">
+              <input
+                className="input-comment"
+                placeholder="Viết bình luận của bạn..."
+                value={valueInput}
+                onChange={(e) => setValueInput(e.target.value)}
+              ></input>
+              <div className="star-review">
+                <StarRatting />
+              </div>
+              <button className="button-comment" onClick={handleComment}>
+                Đánh giá
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <Footer />

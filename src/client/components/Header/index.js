@@ -4,46 +4,47 @@ import { Link, useNavigate } from "react-router-dom";
 import userIcon from "../../assets/img/user-icon.svg";
 import ModalAuth from "../../Page/auth/ModalAuth";
 import "./style.scss";
-import { useDispatch } from "react-redux";
-import { logout } from "../../redux/actions/auth.action";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  closeModelLogin,
+  logout,
+  showModelLogin,
+} from "../../redux/actions/auth.action";
 import { isEmpty } from "lodash";
-import { notification } from "antd";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 Hearder.propTypes = {};
 function Hearder(props) {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [count, setCount] = useState([]);
   const { change, changeCart, changeInfo, setFilters, filters } = props;
   const [changeUser, setChangeUser] = useState(false);
   const [user, setUser] = useState({});
-  const [valueInput, setValueInput] = useState("");
+  const [valueInput, setValueInput] = useState();
   const dispatch = useDispatch();
+  const isOpenModal = useSelector((state) => state);
 
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("user")));
+    setUser(JSON.parse(localStorage?.getItem("user")));
   }, [changeUser, changeInfo]);
   const navigate = useNavigate();
   const handleSubmit = () => {
     navigate("/find-product");
-    if (valueInput) {
-      setFilters({ ...filters, keyword: valueInput });
-    }
+    setFilters({ ...filters, keyword: valueInput });
   };
   const handleInputChange = (e) => {
     setValueInput(e.target.value);
   };
-
   useEffect(() => {
     setCount(JSON.parse(localStorage.getItem("CART")));
   }, [change, changeCart]);
-  const countQuantity = count?.reduce((arr, cur) => arr + cur.quantity, 0);
   const handleLoginLogout = () => {
     if (isEmpty(user)) {
-      setModalIsOpen(true);
+      dispatch(showModelLogin());
     } else {
       dispatch(
         logout(() => {
-          window.location.href("/");
-          // navigate("/");
+          setChangeUser(!changeUser);
+          navigate("/");
         })
       );
     }
@@ -52,21 +53,19 @@ function Hearder(props) {
     if (!isEmpty(user)) {
       navigate("/user/0");
     } else {
-      notification.open({
-        message: "Vui lòng đăng nhập",
-        description: "",
-      });
+      toast.info("Vui lòng đăng nhập để xem thông tin!");
     }
   };
   return (
     <Fragment>
+      <ToastContainer />
       <header>
         <Link to="/">
           <img
             src="https://xwatch.vn/images/config/logo-xwatch-216-62_1616143160.png
               "
             alt=""
-            style={{ marginLeft: "20px", marginTop: "-16px", width: "200px" }}
+            style={{ marginLeft: "50px", marginTop: "-15px", width: "200px" }}
           />
         </Link>
         <div className="header container">
@@ -94,7 +93,7 @@ function Hearder(props) {
             </div>
           </div>
           <div className="header__cart" onClick={() => navigate("/cart")}>
-            <span className="cart__noti-number">{countQuantity || 0}</span>
+            <span className="cart__noti-number">{count?.length || 0}</span>
             <i className="fas fa-shopping-cart"></i>
             <p>Giỏ hàng</p>
           </div>
@@ -113,9 +112,9 @@ function Hearder(props) {
         </div>
       </header>
       <Modal
-        isOpen={modalIsOpen}
+        isOpen={isOpenModal?.auth?.isOpenModal}
         ariaHideApp={false}
-        onRequestClose={() => setModalIsOpen(false)}
+        onRequestClose={() => dispatch(closeModelLogin())}
         shouldCloseOnOverlayClick={true}
         style={{
           overlay: {
@@ -141,11 +140,7 @@ function Hearder(props) {
           },
         }}
       >
-        <ModalAuth
-          setModalIsOpen={setModalIsOpen}
-          changeUser={changeUser}
-          setChangeUser={setChangeUser}
-        />
+        <ModalAuth changeUser={changeUser} setChangeUser={setChangeUser} />
       </Modal>
     </Fragment>
   );

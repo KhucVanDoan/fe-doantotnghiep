@@ -54,7 +54,7 @@ const DetailOrder = ({ idOrder }) => {
         </div>
       </div>
       <div>
-        <h4>Danh sách sản phẩm</h4>
+        <h4 style={{ marginTop: "15px" }}>Danh sách sản phẩm</h4>
         <table>
           <tr>
             <th>Ảnh sản phẩm</th>
@@ -66,7 +66,11 @@ const DetailOrder = ({ idOrder }) => {
           {oderDetail?.item?.orderDetails?.map((a) => (
             <tr>
               <td>
-                <img src={`${ROOT_URL}/${a?.images[0]?.url}`} alt="hihi" />
+                <img
+                  src={`${ROOT_URL}/${a?.images[0]?.url}`}
+                  alt="hihi"
+                  style={{ width: "100px", height: "70px", padding: "2px" }}
+                />
               </td>
               <td>{a?.itemName}</td>
               <td>{formatMoney(a?.orderPrice)}</td>

@@ -8,9 +8,8 @@ function PaymentSuccess() {
     <>
       <Hearder />
       <div className="payment-success">
-        <div className="header">Đặt Hàng Thành Công</div>
         <div className="info">
-          <p>Xin cảm ơn quý khách đã mua hàng tại Xwatch</p>
+          <p> Xin cảm ơn quý khách đã mua hàng tại Xwatch</p>
           <Link className="back-to-home" to="/">
             &lt; Quay lại trang chủ
           </Link>

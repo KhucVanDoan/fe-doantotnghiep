@@ -1,5 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AutoComplete } from "antd";
 import React from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -9,16 +8,16 @@ import PasswordField from "../../components/form-controls/PasswordField";
 function RegisterForm(props) {
   const { onSubmit } = props;
   const schema = yup.object().shape({
-    name: yup.string().required("Please enter your full name"),
+    name: yup.string().required("Vui lòng nhập họ tên"),
     email: yup
       .string()
-      .required("Please enter your email")
-      .email("Please enter a valid email"),
-    password: yup.string().required("Please enter your password").min(6),
+      .required("Vui lòng nhập email")
+      .email("Email không hợp lệ"),
+    password: yup.string().required("Vui lòng nhập mật khẩu").min(6),
     phone: yup
       .string()
-      .required("Please enter your phone number")
-      .matches(/^(0[3|5|7|8|9])+([0-9]{8})$/, "Phone number is not valid"),
+      .required("Vui lòng nhập số điện thoại")
+      .matches(/^(0[3|5|7|8|9])+([0-9]{8})$/, "Số điện thoại không hợp lệ"),
   });
 
   const form = useForm({
@@ -53,7 +52,7 @@ function RegisterForm(props) {
           label="Email"
         />
         <PasswordField
-          placeholder="Mật khẩu từ 6 đến 32 ký tự"
+          placeholder="Nhập mật khẩu"
           name="password"
           form={form}
           label="Mật Khẩu"

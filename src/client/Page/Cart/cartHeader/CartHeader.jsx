@@ -7,15 +7,10 @@ function CartHeader(props) {
   useEffect(() => {
     setQuantityCart(JSON.parse(localStorage.getItem("CART")));
   }, [changeCart]);
-
-  const countQuantity = quantitycart?.reduce(
-    (arr, cur) => arr + cur.quantity,
-    0
-  );
   return (
     <div className="cart__left__header">
       <p>GIỎ HÀNG</p>
-      <p>({countQuantity || 0} Sản Phẩm)</p>
+      <p>({quantitycart?.length || 0} Sản Phẩm)</p>
     </div>
   );
 }

@@ -4,13 +4,15 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import InputField from "../../components/form-controls/InputField";
 import PasswordField from "../../components/form-controls/PasswordField";
-import { toast } from "react-toastify";
 
 function LoginForm(props) {
   const { onSubmit, setMode } = props;
   const schema = yup.object().shape({
-    phone: yup.string().required("Please enter your phone"),
-    password: yup.string().required("Please enter your password").min(6),
+    phone: yup
+      .string()
+      .required("Vui lòng nhập số điện thoại")
+      .matches(/^(0[3|5|7|8|9])+([0-9]{8})$/, "Số điện thoại không hợp lệ"),
+    password: yup.string().required("Vui lòng nhập mật khẩu").min(6),
   });
 
   const form = useForm({
@@ -35,13 +37,13 @@ function LoginForm(props) {
       <h3 className="section-login__title">Đăng Nhập</h3>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <InputField
-          placeholder="Nhập email hoặc số điện thoại"
+          placeholder="Nhập số điện thoại"
           name="phone"
           form={form}
           label="Tên tài khoản"
         />
         <PasswordField
-          placeholder="Mật khẩu từ 6 đến 32 ký tự"
+          placeholder="Nhập mật khẩu"
           name="password"
           form={form}
           label="Mật Khẩu"

@@ -4,18 +4,20 @@ import Forgot from "./ForgotPassword";
 import Login from "./Login";
 import "./modal-auth.scss";
 import Register from "./Register";
+import { useDispatch } from "react-redux";
+import { closeModelLogin } from "../../redux/actions/auth.action";
 export const MODE = {
   LOGIN: "login",
   REGISTER: "register",
   OTP: "OTP",
   FORGOTPASSWORD: "FORGOTPASSWORD",
 };
-function ModalAuth({ setModalIsOpen, changeUser, setChangeUser }) {
+function ModalAuth({ changeUser, setChangeUser, isUser, setIsUser }) {
   const [mode, setMode] = useState(MODE.LOGIN);
-
+  const dispatch = useDispatch();
   return (
     <div className="modal-auth">
-      <div onClick={() => setModalIsOpen(false)} className="time-close">
+      <div onClick={() => dispatch(closeModelLogin())} className="time-close">
         X
       </div>
       <div className="header">
@@ -35,10 +37,11 @@ function ModalAuth({ setModalIsOpen, changeUser, setChangeUser }) {
       <div className="content">
         {mode === MODE.LOGIN ? (
           <Login
-            setModalIsOpen={setModalIsOpen}
             changeUser={changeUser}
             setChangeUser={setChangeUser}
             setMode={setMode}
+            isUser={isUser}
+            setIsUser={setIsUser}
           />
         ) : mode === MODE.REGISTER ? (
           <Register setMode={setMode} />

@@ -24,6 +24,9 @@
 .prices {
   margin-top: 20px;
 }
+.span {
+  margin-left: 0;
+}
 .priceOld {
   font-size: 1.3rem;
 
@@ -98,4 +101,92 @@
 }
 .specification_content {
   flex: 1;
+}
+.header_review {
+  display: flex;
+}
+.review_left {
+  width: 50%;
+  text-align: center;
+}
+.star-header {
+  color: yellow;
+  margin-top: 10px;
+}
+.review_right {
+  width: 50%;
+  text-align: center;
+  align-items: center;
+}
+.ha {
+  width: 100%;
+  height: 20px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+.hi {
+  height: 10px;
+  width: 100%;
+  background-color: rgb(236, 240, 241);
+  flex: 1 1 0%;
+  padding: 3px;
+  border-radius: 5px;
+  align-items: center;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 40px;
+}
+.he {
+  width: 0%;
+  background-color: red;
+  flex: 1 1 0%;
+  padding: 3px;
+  border-radius: 5px;
+}
+.button_login {
+  margin-top: 30px;
+  align-items: center;
+  text-align: center;
+  color: red;
+}
+.button {
+  width: 200px;
+  height: 40px;
+  color: white;
+  background-color: rgb(196, 13, 13);
+  border-radius: 10px;
+}
+.button:hover {
+  background-color: #ea4036;
+}
+.comment {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-left: 30px;
+  align-items: center;
+  text-align: center;
+}
+.input-comment {
+  width: 600px;
+  height: 40px;
+}
+.button-comment {
+  width: 100px;
+  height: 40px;
+  background-color: #ea4036;
+  border-radius: 7px;
+  margin-left: 20px;
+}
+.button-comment:hover {
+  background-color: #f8482f;
+  cursor: pointer;
+}
+.star-review {
+  margin-top: -6px;
+  margin-left: -17px;
+  align-items: center;
+  text-align: center;
+  margin-right: 30px;
 }

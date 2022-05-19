@@ -9,7 +9,15 @@ import {
 } from "../../service/auth.service";
 import * as types from "../constants";
 
-export const login = (user, onSuccess, onError) => {
+export const showModelLogin = () => {
+  return { type: types.OPEN };
+};
+export const closeModelLogin = () => {
+  return {
+    type: types.CLOSE,
+  };
+};
+export const login = (user, onSuccess) => {
   return async (dispatch) => {
     try {
       const response = await loginService(user);
@@ -66,8 +74,8 @@ export const getProfile = (onSuccess) => {
       dispatch({
         type: types.GET_PROFILE,
         user: response?.data,
-        onSuccess,
       });
+      onSuccess();
     } catch (error) {
       dispatch({
         type: types.LOGOUT,
@@ -79,8 +87,8 @@ export const logout = (onSuccess) => {
   return async (dispatch) => {
     dispatch({
       type: types.LOGOUT,
-      onSuccess,
     });
+    onSuccess();
   };
 };
 export const updateUser = (params, onSuccess) => {
@@ -88,8 +96,8 @@ export const updateUser = (params, onSuccess) => {
     const response = await update(params);
     dispatch({
       type: types.UPDATE,
-      onSuccess,
     });
+    onSuccess();
   };
 };
 export const changePassword = (params, onSuccess) => {

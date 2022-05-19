@@ -4,6 +4,7 @@ const initialState = {
   token: localStorage.getItem("token"),
   refreshToken: localStorage.getItem("refreshToken"),
   user: null,
+  isOpenModal: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -21,23 +22,32 @@ const authReducer = (state = initialState, action) => {
         refreshToken: action.refreshToken,
       };
     case types.GET_PROFILE:
-      action.onSuccess();
       return {
         ...state,
         user: action.user,
       };
     case types.UPDATE:
-      action.onSuccess();
       return {
         ...state,
       };
     case types.LOGOUT:
-      localStorage.clear();
-      action.onSuccess();
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
       return {
         token: null,
         refreshToken: null,
         user: null,
+      };
+    case types.OPEN:
+      return {
+        ...state,
+        isOpenModal: true,
+      };
+    case types.CLOSE:
+      return {
+        ...state,
+        isOpenModal: false,
       };
     default:
       return state;

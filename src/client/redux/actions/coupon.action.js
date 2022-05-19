@@ -1,4 +1,5 @@
 import { notification } from "antd";
+import { toast } from "react-toastify";
 import {
   check,
   create,
@@ -129,17 +130,17 @@ export const checkCoupon = (code) => {
   return async (dispatch) => {
     try {
       const response = await check(code);
-      console.log("respon", response);
-      dispatch({
-        type: types.CHECK_COUPON,
-        data: response?.data,
-      });
+      if (response?.statusCode === 404) {
+        toast.error(`Mã ${response?.message}`);
+      } else {
+        toast.success("Áp dụng mã thành công");
+        dispatch({
+          type: types.CHECK_COUPON,
+          data: response?.data,
+        });
+      }
     } catch (error) {
-      console.log(error?.message || error);
-      notification.open({
-        message: "Thất bại",
-        description: error?.message || error,
-      });
+      toast.error(`${error?.message}`);
     }
   };
 };
