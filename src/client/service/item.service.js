@@ -16,5 +16,5 @@ export const update = (id, data) =>
     },
   });
 export const remove = (id) => axios.delete(`${APIEnum.ITEM}/${id}`);
-export const detail = (id) => axios.get(`${APIEnum.ITEM}/${id}`);
+export const detail = (id) => axios.get(`${APIEnum.ITEM}/${id}?isView=1`);
 export const review = (data) => axios.post("/review", data);

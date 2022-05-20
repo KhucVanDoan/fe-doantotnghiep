@@ -9,7 +9,7 @@ const FeatureProduct = () => {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.item);
   useEffect(() => {
-    dispatch(listItem({ isView: -1, limit: 8 }));
+    dispatch(listItem({ orderView: -1, limit: 8 }));
   }, [dispatch]);
   return (
     <Box style={{ maxWidth: "1200px", marginLeft: "80px" }}>

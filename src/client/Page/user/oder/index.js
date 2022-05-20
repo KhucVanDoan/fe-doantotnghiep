@@ -8,7 +8,7 @@ import { formatMoney } from "../../../common/common";
 import { Pagination } from "@mui/material";
 const Order = ({ setIdOrder }) => {
   const order = useSelector((state) => state.order);
-  const [filters, setFilters] = useState({ page: 1, isMy: 1 });
+  const [filters, setFilters] = useState({ page: 1, isMe: 1 });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
