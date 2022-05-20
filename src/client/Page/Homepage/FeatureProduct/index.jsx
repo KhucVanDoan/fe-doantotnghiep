@@ -12,7 +12,7 @@ const FeatureProduct = () => {
     dispatch(listItem({ orderView: -1, limit: 8 }));
   }, [dispatch]);
   return (
-    <Box style={{ maxWidth: "1200px", marginLeft: "80px" }}>
+    <Box style={{ maxWidth: "1230px", marginLeft: "160px" }}>
       <h2 style={{ alignItems: "center", textAlign: "center" }}>
         SẢN PHẨM NỔI BẬT
       </h2>
