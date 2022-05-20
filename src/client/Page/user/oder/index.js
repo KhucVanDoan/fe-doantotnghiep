@@ -8,19 +8,17 @@ import { formatMoney } from "../../../common/common";
 import { Pagination } from "@mui/material";
 const Order = ({ setIdOrder }) => {
   const order = useSelector((state) => state.order);
-  const [page, setPage] = useState(1);
-  const [filters, setFilters] = useState({ page });
+  const [filters, setFilters] = useState({ page: 1, isMy: 1 });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    dispatch(listOrder({ isMy: 1, page: page }));
-  }, []);
+    dispatch(listOrder(filters));
+  }, [filters]);
   const handleClick = (id) => {
     setIdOrder(id);
     navigate("/user/orderDetail");
   };
   const handleChange = (event, value) => {
-    setPage(value);
     setFilters({
       ...filters,
       page: value,
@@ -72,7 +70,7 @@ const Order = ({ setIdOrder }) => {
           marginTop: "5px",
         }}
         count={Math.ceil(order?.meta?.total / 10)}
-        page={page}
+        page={filters?.page}
         onChange={handleChange}
       />
     </>

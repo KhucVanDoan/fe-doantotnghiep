@@ -8,7 +8,8 @@ import {
   update,
 } from "../../service/item.service";
 import * as types from "../constants";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export const listItem = (query) => {
   return async (dispatch) => {
     try {
@@ -151,6 +152,9 @@ export const detailItem = (id) => {
 export const reviewItem = (params, onSuccess, onError) => {
   return async (dispatch) => {
     const response = await review(params);
+    if (response.statusCode === 400) {
+      toast.info(`${response.message}`);
+    }
     onSuccess();
     onError();
   };

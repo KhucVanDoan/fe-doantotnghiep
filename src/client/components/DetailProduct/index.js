@@ -73,16 +73,10 @@ const DetailProduct = () => {
       content: valueInput,
     };
     dispatch(
-      reviewItem(
-        params,
-        () => {
-          setValueInput("");
-          setIsview(!isReview);
-        },
-        () => {
-          toast.info("Bạn đã đánh giá sản phẩm này rồi");
-        }
-      )
+      reviewItem(params, () => {
+        setValueInput("");
+        setIsview(!isReview);
+      })
     );
   };
   const oneStart = productDetail?.item?.reviews?.filter(

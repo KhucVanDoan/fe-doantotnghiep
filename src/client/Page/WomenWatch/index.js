@@ -22,7 +22,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 function MenWatch(props) {
   const classes = useStyle();
-  const [filters, setFilters] = useState({ categoryId: 5 });
+  const [filters, setFilters] = useState({ categoryId: 5, limit: 8 });
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const productList = useSelector((state) => state.item);
