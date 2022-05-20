@@ -4,10 +4,13 @@ import { addToCart } from "../../redux/actions/cart.action";
 import Footer from "../Footer";
 import Hearder from "../Header";
 import Quantity from "../Quantity";
-import userIcon from "../../assets/img/user-icon.svg";
 import "./style.css";
 import { useParams } from "react-router";
-import { detailItem, reviewItem } from "../../redux/actions/item.action";
+import {
+  detailItem,
+  reviewItem,
+  listItem,
+} from "../../redux/actions/item.action";
 import parse from "html-react-parser";
 import ImageSlide from "./slideImage";
 import { formatMoney } from "../../common/common";
@@ -17,6 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { isEmpty } from "lodash";
 import { showModelLogin } from "../../redux/actions/auth.action";
 import StarRatting from "./commentProduct";
+import ProductList from "../../components/ProductList";
 
 const DetailProduct = () => {
   const [quantity, setQuantity] = useState(1);
@@ -27,17 +31,28 @@ const DetailProduct = () => {
   const [valueInput, setValueInput] = useState("");
   const dispatch = useDispatch();
   const productDetail = useSelector((state) => state.item);
+  const productIsSame = useSelector((state) => state.item.items);
+
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch(detailItem(id));
+    dispatch(
+      detailItem(id, () => {
+        dispatch(
+          listItem({ isSame: productDetail?.item?.category?.id, limit: 8 })
+        );
+      })
+    );
   }, [dispatch, id, isReview]);
   useEffect(() => {
     setUser(JSON.parse(localStorage?.getItem("user")));
   }, []);
+
   const handleQuantityChange = (newValue) => {
     if (newValue > productDetail?.item?.stockQuantity) {
       toast.error("vượt quá số lượng sản phẩm hiện có");
+    } else if (newValue < 0) {
+      toast.error("số lượng mua không hợp lệ");
     }
     setQuantity(newValue);
   };
@@ -52,15 +67,21 @@ const DetailProduct = () => {
       stockQuanttity: productDetail?.item?.stockQuantity,
       name: productDetail?.item?.name,
     };
-    if (params?.quantity < params?.stockQuanttity) {
+    if (
+      params?.quantity < params?.stockQuanttity &&
+      params?.quantity > 0 &&
+      params?.quantity !== ""
+    ) {
       dispatch(
         addToCart(params, () => {
           toast.success("Thêm vào giỏ hàng thành công");
           setChange(!change);
         })
       );
-    } else {
+    } else if (params?.quantity > params?.stockQuanttity) {
       toast.error("vượt quá số lượng sản phẩm hiện có");
+    } else {
+      toast.error("số lượng sản phẩm không hợp lệ");
     }
   };
   const handleClick = () => {
@@ -281,7 +302,11 @@ const DetailProduct = () => {
             </div>
           )}
           <div style={{ marginLeft: "15px" }}>
-            <h3 style={{ marginTop: "15px" }}>Đánh giá & bình luận </h3>
+            {productDetail?.item?.reviews?.length > 0 ? (
+              <h3 style={{ marginTop: "15px" }}>Đánh giá & bình luận </h3>
+            ) : (
+              ""
+            )}
             {productDetail?.item?.reviews?.map((item) => (
               <>
                 <div style={{ display: "flex" }}>
@@ -302,6 +327,12 @@ const DetailProduct = () => {
               </>
             ))}
           </div>
+        </div>
+      </div>
+      <div className="product_infor">
+        <div className="product_description">
+          <h2>Sản phẩm liên quan</h2>
+          <ProductList data={productIsSame} />
         </div>
       </div>
       <Footer />

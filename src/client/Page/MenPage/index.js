@@ -77,7 +77,15 @@ function MenWatch(props) {
             Đồng hồ nam
           </Link>
         </Breadcrumbs>
-        <h2 style={{ paddingTop: "10px" }}>Đồng hồ nam </h2>
+        <h2
+          style={{
+            paddingTop: "10px",
+            borderBottom: " 1px solid #9d3333",
+            width: "155px",
+          }}
+        >
+          Đồng hồ nam{" "}
+        </h2>
       </div>
       <Box pt={3} style={{ backgroundColor: "#ebe7e7" }}>
         <Container>

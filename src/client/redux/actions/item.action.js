@@ -67,7 +67,6 @@ export const createItem = (data, cb) => {
 export const updateItem = (id, data, cb) => {
   return async (dispatch) => {
     try {
-      console.log("data.images.fileList", data.images.fileList);
       const form = new FormData();
       form.append("name", data.name);
       form.append("description", data.description);
@@ -132,7 +131,7 @@ export const deleteItem = (id, cb) => {
   };
 };
 
-export const detailItem = (id) => {
+export const detailItem = (id, onSuccess) => {
   return async (dispatch) => {
     try {
       const response = await detail(id);
@@ -140,6 +139,7 @@ export const detailItem = (id) => {
         type: types.DETAIL_ITEM,
         data: response.data,
       });
+      onSuccess();
     } catch (error) {
       console.log(error?.message || error);
       notification.open({

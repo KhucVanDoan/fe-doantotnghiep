@@ -17,6 +17,10 @@ const CartItem = ({ onChange, item, changeCart, setChangeCart }) => {
     if (!onChange) return;
     if (value > item?.stockQuanttity) {
       toast.error("số lượng sản phẩm đã đạt tối đa");
+    } else if (value < 0) {
+      toast.error("số lượng không hợp lệ");
+    } else if (value === "" || value === 0) {
+      onChange(item.id, 1);
     } else {
       onChange(item.id, value);
     }

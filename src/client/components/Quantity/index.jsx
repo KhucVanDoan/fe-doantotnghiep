@@ -14,9 +14,11 @@ function Quantity({ count, onChange }) {
       </button>
       <input
         onChange={(e) => {
-          const value = parseInt(e.target.value);
-          if (value <= 0 || !value) return onChange(countInt);
-          return onChange(value);
+          if (e.target.value <= 0 || !e.target.value) return onChange("");
+          return onChange(e.target.value);
+        }}
+        onBlur={(e) => {
+          if (e.target.value <= 0 || !e.target.value) return onChange(1);
         }}
         type="number"
         value={countInt}

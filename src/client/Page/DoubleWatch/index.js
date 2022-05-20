@@ -22,7 +22,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 function MenWatch(props) {
   const classes = useStyle();
-  const [filters, setFilters] = useState({ categoryId: 7 });
+  const [filters, setFilters] = useState({ categoryId: 6 });
   const productList = useSelector((state) => state.item);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -76,7 +76,15 @@ function MenWatch(props) {
             Đồng hồ đôi
           </Link>
         </Breadcrumbs>
-        <h2 style={{ paddingTop: "20px" }}>Đồng hồ đôi </h2>
+        <h2
+          style={{
+            paddingTop: "10px",
+            borderBottom: " 1px solid #9d3333",
+            width: "155px",
+          }}
+        >
+          Đồng hồ đôi{" "}
+        </h2>
       </div>
       <Box pt={3} style={{ backgroundColor: "#ebe7e7" }}>
         <Container>
