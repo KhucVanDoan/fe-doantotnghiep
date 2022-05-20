@@ -89,8 +89,12 @@ function Hearder(props) {
                 <div onClick={() => navigate("/dong-ho-nam")}>ĐỒNG HỒ NAM</div>
                 <div onClick={() => navigate("/dong-ho-nu")}>ĐỒNG HỒ NỮ</div>
                 <div onClick={() => navigate("/dong-ho-doi")}>ĐỒNG HỒ ĐÔI</div>
-                <div>GIỚI THIỆU</div>
-                <div>LIÊN HỆ</div>
+                <div onClick={() => toast.info("Chức năng đang phát triển")}>
+                  GIỚI THIỆU
+                </div>
+                <div onClick={() => toast.info("Chức năng đang phát triển")}>
+                  LIÊN HỆ
+                </div>
               </div>
             </div>
           </div>
